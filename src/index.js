@@ -1,5 +1,10 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Tray, Menu } = require('electron');
 const path = require('path');
+
+//express server
+const server = require('./app');
+
+//Electron build
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -7,21 +12,78 @@ if (require('electron-squirrel-startup')) {
 }
 
 const createWindow = () => {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1366,
+    height: 768,
+    icon: './public/images/icon.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true
     },
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+
+
+  //mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.removeMenu();
+  mainWindow.loadURL('http://localhost:3002/');
+
+  let tray = new Tray('./public/images/icon48x48.png');
+  let windowIsVisible;
+
+  const template = [
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Mostrar', click: function () {
+        mainWindow.show();
+      },
+    },
+    {
+      label: 'Sair', click: function () {
+        mainWindow.destroy();
+        app.quit();
+      },
+    },
+  ];
+  const contextMenu = Menu.buildFromTemplate(template);
+  tray.setContextMenu(contextMenu);
+  tray.setToolTip('Monitoramento de impressoras');
+
+  mainWindow.on('minimize', function (event) {
+    event.preventDefault();
+    mainWindow.hide();
+  });
+
+  mainWindow.on('close', function (event) {
+    if (!app.isQuiting) {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+  });
+
+  mainWindow.on('show', () => {
+    windowIsVisible = true;
+  });
+
+  mainWindow.on('hide', function () {
+    windowIsVisible = false;
+  });
+
+  tray.on('click', () => {
+    if (windowIsVisible) {
+      mainWindow.hide();
+    } else {
+      mainWindow.show();
+    }
+  });
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 };
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

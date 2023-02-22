@@ -1,10 +1,15 @@
 module.exports = {
-  packagerConfig: {},
+  packagerConfig: {
+    icon: './public/images/icon'
+  },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        iconUrl: 'https://public/images/icon.ico',
+        setupIcon: './public/images/icon.ico'
+      },
     },
     {
       name: '@electron-forge/maker-zip',
