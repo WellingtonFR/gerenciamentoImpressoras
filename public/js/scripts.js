@@ -68,16 +68,3 @@ function trocarTexto() {
     location.href = "/info";
   }, 7000);
 }
-
-function limpar(valor) {
-  valor = valor.trim();
-  valor = valor.replace(",", "");
-  valor = valor.replace(";", "");
-  valor = valor.replace("'", "");
-  valor = valor.replace('"', "");
-  valor = valor.replace("<", "");
-  valor = valor.replace(">", "");
-  valor = valor.replace("%", "");
-  valor = valor.replace("*", "");
-  return valor;
-}

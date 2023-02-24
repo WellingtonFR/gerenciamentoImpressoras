@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   border: none;
-  font-family: "Roboto", sans-serif;
+  font-family: Arial, sans-serif;
   color: rgb(236, 236, 236);
   font-size: 14px;
 }
@@ -20,7 +20,6 @@ body {
   display: grid;
   align-items: center;
   justify-items: center;
-  margin: 10px;
 }
 
 a {
@@ -164,4 +163,29 @@ a:hover {
   transition: 0.4s;
   background-color: rgb(88, 88, 88);
   border-bottom: 1px solid rgb(179, 179, 179);
+}
+
+#refresh-float-button {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  text-align: center;
+  border: 2px solid #999;
+}
+
+#refresh-float-button:hover {
+  background-color: rgb(73, 73, 73);
+}
+
+#refresh-float-button img {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

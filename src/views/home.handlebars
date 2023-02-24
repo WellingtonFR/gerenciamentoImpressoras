@@ -6,60 +6,59 @@
         <th>Status</th>
         <th onclick="sortTable(1)">Fila</th>
         <th onclick="sortTable(2)">IP</th>
-        <th onclick="sortTable(3)">Marca</th>
+        <th onclick="sortTable(3)">Fabricante</th>
         <th onclick="sortTable(4)">Modelo</th>
         <th onclick="sortTable(5)">Toner (%)</th>
         <th onclick="sortTable(6)">Kit de manuteção (%)</th>
         <th onclick="sortTable(7)">Unidade de imagem (%)</th>
-        <th>Detalhes</th>
       </tr>
+
       {{#each tabela}}
       <tr>
 
-        {{#ifString this.Status "Online"}}
+        {{#ifString this.rede "Online"}}
 
         <td class="status-ball-ok"></td>
 
-        <td class="text-left">{{this.Fila}}</td>
-        <td><a href="http://{{this.IP}}" target="blank">{{this.IP}}</a></td>
-        <td>{{this.Marca}}</td>
-        <td class="text-left">{{this.Modelo}}</td>
+        <td class="text-left">{{this.nomeFila}}</td>
+        <td><a href="http://{{this.enderecoFila}}" target="_blank">{{this.enderecoFila}}</a></td>
+        <td>{{this.fabricante}}</td>
+        <td class="text-left">{{this.modelo}}</td>
 
-        {{#if this.Toner 10}}
-        <td class="error-color">{{this.Toner}}</td>
+        {{#if this.toner 10}}
+        <td class="error-color">{{this.toner}}</td>
         {{else}}
-        <td>{{this.Toner}}</td>
+        <td>{{this.toner}}</td>
         {{/if}}
 
-        {{#if this.KitDeManutencao 10}}
-        <td class="error-color">{{this.KitDeManutencao}}</td>
+        {{#if this.kitManutencao 10}}
+        <td class="error-color">{{this.kitManutencao}}</td>
         {{else}}
-        <td>{{this.KitDeManutencao}}</td>
+        <td>{{this.kitManutencao}}</td>
         {{/if}}
 
-        {{#if this.UnidadeDeImagem 10}}
-        <td class="error-color">{{this.UnidadeDeImagem}}</td>
+        {{#if this.unidadeImagem 10}}
+        <td class="error-color">{{this.unidadeImagem}}</td>
         {{else}}
-        <td>{{this.UnidadeDeImagem}}</td>
+        <td>{{this.unidadeImagem}}</td>
         {{/if}}
         <td>
           <form method="GET" action="/detalhes">
-            <input type="hidden" name="ip" value="{{this.IP}}" />
-            <input type="hidden" name="fila" value="{{this.Fila}}" />
-            <input type="hidden" name="modelo" value="{{this.Modelo}}" />
-            <input type="hidden" name="toner" value="{{this.Toner}}" />
-            <input type="hidden" name="marca" value="{{this.Marca}}" />
-            <input type="hidden" name="kitDeManutencao" value="{{this.KitDeManutencao}}" />
-            <input type="hidden" name="unidadeDeImagem" value="{{this.UnidadeDeImagem}}" />
-            <input type="submit" class="btn-details" value="+" />
+            <input type="hidden" name="enderecoFila" value="{{this.enderecoFila}}" />
+            <input type="hidden" name="nomeFila" value="{{this.nomeFila}}" />
+            <input type="hidden" name="modelo" value="{{this.modelo}}" />
+            <input type="hidden" name="toner" value="{{this.toner}}" />
+            <input type="hidden" name="fabricante" value="{{this.fabricante}}" />
+            <input type="hidden" name="kitManutencao" value="{{this.kitManutencao}}" />
+            <input type="hidden" name="unidadeImagem" value="{{this.unidadeImagem}}" />
           </form>
         </td>
         {{/ifString}}
 
-        {{#ifString this.Status "Offline"}}
+        {{#ifString this.rede "Offline"}}
         <td class="status-ball-error"></td>
-        <td class="text-left">{{this.Fila}}</td>
-        <td>{{this.IP}}</td>
+        <td class="text-left">{{this.nomeFila}}</td>
+        <td>{{this.enderecoFila}}</td>
         <td></td>
         <td></td>
         <td></td>
@@ -72,5 +71,10 @@
       {{/each}}
     </table>
   </div>
-
 </div>
+
+<form method="get" action="/">
+  <button id="refresh-float-button" VALUE="Atualizar">
+    <img src="images/reload.png" />
+  </button>
+</form>

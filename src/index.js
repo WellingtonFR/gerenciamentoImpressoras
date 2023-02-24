@@ -1,5 +1,8 @@
 const { app, BrowserWindow, Tray, Menu } = require('electron');
 const path = require('path');
+const database = require("./database/db")
+const Printers = require("./database/models/printerModel")
+const PrinterStatus = require("./database/models/printerStatusModel")
 
 //express server
 const server = require('./app');
@@ -38,6 +41,37 @@ const createWindow = () => {
     {
       label: 'Mostrar', click: function () {
         mainWindow.show();
+      },
+    },
+    {
+      label: 'Atualizar', click: function () {
+        let dados = [];
+
+        function refreshPrinterData() {
+
+          PrinterStatus.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] }, order: ["nomeFila"]
+          })
+            .then(data => {
+
+              data.forEach(printerData => {
+                dados.push({
+                  nomeFila: printerData.nomeFila,
+                  enderecoFila: printerData.enderecoFila,
+                  rede: printerData.rede,
+                  modelo: printerData.modelo,
+                  serial: printerData.serial,
+                  fabricante: printerData.fabricante,
+                  toner: printerData.toner,
+                  unidadeImagem: printerData.unidadeImagem,
+                  kitManutencao: printerData.kitManutencao,
+                  contador: printerData.contador
+                })
+              })
+            })
+        }
+        refreshPrinterData();
+        mainWindow.reload();
       },
     },
     {

@@ -1,12 +1,17 @@
 const express = require('express');
 const hbs = require("express-handlebars");
+const port = 3002;
+const routes = require("./routes");
+
 const db = require("./database/db")
-const populatePrinterData = require('./controllers/populateData');
+const populateDataFromCSV = require('./controllers/populateData');
+const getPrinterInformation = require('./controllers/getPrinterInformation');
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 
 const app = express();
-const port = 3002;
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-const routes = require("./routes");
 
 //configuration
 app.use(express.static("./public"));
@@ -16,7 +21,8 @@ app.use(express.static("./public"));
     await db.sync();
 })();
 
-populatePrinterData.populateData();
+populateDataFromCSV
+getPrinterInformation
 
 //handlebars
 var hbshelper = hbs.create({
@@ -46,6 +52,6 @@ app.set('views', './src/views');
 app.use("/", routes)
 
 //server
-app.listen(port, () => console.log(`App listening to port ${port}`));
+app.listen(port, () => console.log());
 
 module.exports = app;

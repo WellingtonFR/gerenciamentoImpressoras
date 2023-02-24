@@ -1,13 +1,30 @@
 const { DataTypes } = require('sequelize');
-const database = require("../db")
+const database = require("../db");
+const Printers = require('./printerModel');
 
-const Printers = database.define('Printers', {
+const PrinterStatus = database.define('PrinterStatus', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
+    nomeFila: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    enderecoFila: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    rede: {
+        type: DataTypes.STRING,
+        defaultValue: "offline"
+    },
     modelo: {
+        type: DataTypes.STRING,
+        defaultValue: "-"
+    },
+    serial: {
         type: DataTypes.STRING,
         defaultValue: "-"
     },
@@ -15,7 +32,7 @@ const Printers = database.define('Printers', {
         type: DataTypes.STRING,
         defaultValue: "-"
     },
-    tonner: {
+    toner: {
         type: DataTypes.STRING,
         defaultValue: "-"
     },
@@ -35,4 +52,4 @@ const Printers = database.define('Printers', {
     timestamps: true,
 });
 
-module.exports = Printers;
+module.exports = PrinterStatus;
