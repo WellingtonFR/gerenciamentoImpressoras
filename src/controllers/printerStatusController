@@ -1,0 +1,59 @@
+const dadosbase = require("../database/db")
+const PrinterStatus = require("../database/models/printerStatusModel")
+
+const create = async (dados) => {
+
+    await PrinterStatus.create({
+        nomeFila: dados.nomeFila,
+        enderecoFila: dados.enderecoFila,
+        rede: "Online",
+        modelo: dados.modelo,
+        fabricante: dados.fabricante,
+        toner: dados.toner,
+        unidadeImagem: dados.unidadeImagem,
+        kitManutencao: dados.kitManutencao,
+        contador: dados.contador,
+        serial: dados.serial
+    }).catch(error => {
+        console.log("Erro ao salvar as informacoes da impressora: " + dados.nomeFila + " " + error)
+    })
+}
+
+const update = async (dados) => {
+
+    await PrinterStatus.create({
+        nomeFila: dados.nomeFila,
+        enderecoFila: dados.enderecoFila,
+        rede: "Online",
+        modelo: dados.modelo,
+        fabricante: dados.fabricante,
+        toner: dados.toner,
+        unidadeImagem: dados.unidadeImagem,
+        kitManutencao: dados.kitManutencao,
+        contador: dados.contador,
+        serial: dados.serial
+    }).catch(error => {
+        console.log("Erro ao salvar as informacoes da impressora: " + dados.nomeFila + " " + error)
+    })
+}
+
+const buscaFilaExistente = async (nomeFila) => {
+
+    let buscaFila = await PrinterStatus
+        .findOne({ where: { nomeFila: nomeFila } })
+        .catch(error => {
+            console.log("Erro ao localizar a impressora: " + nomeFila + " " + error)
+        })
+
+    if (buscaFila) {
+        return true
+    }
+
+    return false
+}
+
+module.exports = {
+    create,
+    update,
+    buscaFilaExistente
+}

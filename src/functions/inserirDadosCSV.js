@@ -3,7 +3,9 @@ const csv = require("csv-parser");
 const database = require("../database/db")
 const Printers = require("../database/models/printerModel")
 
-const populateData = (() => {
+const inserirDadosCSV = () => {
+
+    console.log("hello dentro")
 
     fs.createReadStream("./public/Impressoras.csv")
         .pipe(csv())
@@ -18,6 +20,6 @@ const populateData = (() => {
                 })
             }
         });
-})
+}
 
-module.exports = populateData();
+module.exports = inserirDadosCSV

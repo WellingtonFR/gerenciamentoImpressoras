@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const database = require("./database/db")
-const Printers = require("./database/models/printerModel")
 const PrinterStatus = require("./database/models/printerStatusModel")
 
 let dados = [];
@@ -33,8 +32,6 @@ function refreshPrinterData() {
 }
 
 refreshPrinterData();
-
-
 
 
 router.get('/', (req, res) => res.render("home", { tabela: dados }));

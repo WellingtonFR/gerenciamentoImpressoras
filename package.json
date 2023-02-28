@@ -27,6 +27,7 @@
     "express-handlebars": "^6.0.7",
     "fs": "^0.0.1-security",
     "sequelize": "^6.28.0",
+    "snmp-native": "^1.2.0",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {

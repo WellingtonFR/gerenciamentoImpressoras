@@ -1,7 +1,6 @@
 const { app, BrowserWindow, Tray, Menu } = require('electron');
 const path = require('path');
 const database = require("./database/db")
-const Printers = require("./database/models/printerModel")
 const PrinterStatus = require("./database/models/printerStatusModel")
 
 //express server

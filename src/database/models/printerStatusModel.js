@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const database = require("../db");
-const Printers = require('./printerModel');
 
 const PrinterStatus = database.define('PrinterStatus', {
     id: {

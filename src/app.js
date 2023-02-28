@@ -4,7 +4,7 @@ const port = 3002;
 const routes = require("./routes");
 
 const db = require("./database/db")
-const populateDataFromCSV = require('./controllers/populateData');
+const inserirDadosCSV = require('./functions/inserirDadosCSV');
 const getPrinterInformation = require('./controllers/getPrinterInformation');
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 
@@ -21,8 +21,11 @@ app.use(express.static("./public"));
     await db.sync();
 })();
 
-populateDataFromCSV
-getPrinterInformation
+
+console.log("hello antes")
+inserirDadosCSV()
+console.log("hello depois")
+//getPrinterInformation
 
 //handlebars
 var hbshelper = hbs.create({
