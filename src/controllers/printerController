@@ -1,8 +1,8 @@
 const dadosbase = require("../database/db")
-const PrinterStatus = require("../database/models/printerStatusModel")
+const Printer = require("../database/models/printerModel")
 
 const find = async () => {
-    let dados = await PrinterStatus.findAll(
+    let dados = await Printer.findAll(
         {
             exclude: ["createdAt", "updatedAt"],
             order: ["nomeFila"]
@@ -14,7 +14,7 @@ const find = async () => {
 }
 
 const findByName = async (nomeFila) => {
-    let dados = await PrinterStatus.findOne({
+    let dados = await Printer.findOne({
         where: { nomeFila: nomeFila }
     }).catch(error => {
         console.log("Erro ao buscar as informacoes " + error)
@@ -25,7 +25,7 @@ const findByName = async (nomeFila) => {
 
 const create = (dados) => {
 
-    PrinterStatus.create({
+    Printer.create({
         nomeFila: dados.nomeFila,
         enderecoFila: dados.enderecoFila,
         rede: "Online",
@@ -43,7 +43,7 @@ const create = (dados) => {
 
 const update = (dados) => {
 
-    PrinterStatus.update({
+    Printer.create({
         nomeFila: dados.nomeFila,
         enderecoFila: dados.enderecoFila,
         rede: "Online",

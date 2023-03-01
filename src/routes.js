@@ -1,40 +1,22 @@
 const express = require("express");
 const router = express.Router();
 
+const { find } = require("./controllers/printerStatusController");
 const database = require("./database/db")
-const PrinterStatus = require("./database/models/printerStatusModel")
 
-let dados = [];
+router.get('/', async (req, res) => {
 
-function refreshPrinterData() {
+    let tabela = []
 
-
-    PrinterStatus.findAll({
-        attributes: { exclude: ["createdAt", "updatedAt"] }, order: ["nomeFila"]
+    await find().then(dados => {
+        dados.forEach(printer => {
+            tabela.push(printer.dataValues)
+        });
     })
-        .then(data => {
 
-            data.forEach(printerData => {
-                dados.push({
-                    nomeFila: printerData.nomeFila,
-                    enderecoFila: printerData.enderecoFila,
-                    rede: printerData.rede,
-                    modelo: printerData.modelo,
-                    serial: printerData.serial,
-                    fabricante: printerData.fabricante,
-                    toner: printerData.toner,
-                    unidadeImagem: printerData.unidadeImagem,
-                    kitManutencao: printerData.kitManutencao,
-                    contador: printerData.contador
-                })
-            })
-        })
-}
+    res.render("home", { tabela: tabela })
+});
 
-refreshPrinterData();
-
-
-router.get('/', (req, res) => res.render("home", { tabela: dados }));
 router.get('/gerenciamento', (req, res) => res.render("gerenciamento"));
 router.get('/cardsView', (req, res) => res.render("cards"));
 

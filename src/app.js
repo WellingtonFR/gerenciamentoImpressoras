@@ -17,15 +17,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static("./public"));
 
 //sequelize
-(async () => {
-    await db.sync();
-})();
-
-
-console.log("hello antes")
-inserirDadosCSV()
-console.log("hello depois")
-//getPrinterInformation
+db.sync()
 
 //handlebars
 var hbshelper = hbs.create({

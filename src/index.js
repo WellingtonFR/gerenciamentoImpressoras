@@ -5,6 +5,8 @@ const PrinterStatus = require("./database/models/printerStatusModel")
 
 //express server
 const server = require('./app');
+const inserirDadosCSV = require('./functions/inserirDadosCSV');
+const getPrinterInformation = require('./controllers/getPrinterInformation');
 
 //Electron build
 
@@ -38,39 +40,18 @@ const createWindow = () => {
       type: 'separator',
     },
     {
-      label: 'Mostrar', click: function () {
-        mainWindow.show();
+      label: 'Atualizar', click: function (req, res) {
+        mainWindow.webContents.send('/');
       },
     },
     {
-      label: 'Atualizar', click: function () {
-        let dados = [];
-
-        function refreshPrinterData() {
-
-          PrinterStatus.findAll({
-            attributes: { exclude: ["createdAt", "updatedAt"] }, order: ["nomeFila"]
-          })
-            .then(data => {
-
-              data.forEach(printerData => {
-                dados.push({
-                  nomeFila: printerData.nomeFila,
-                  enderecoFila: printerData.enderecoFila,
-                  rede: printerData.rede,
-                  modelo: printerData.modelo,
-                  serial: printerData.serial,
-                  fabricante: printerData.fabricante,
-                  toner: printerData.toner,
-                  unidadeImagem: printerData.unidadeImagem,
-                  kitManutencao: printerData.kitManutencao,
-                  contador: printerData.contador
-                })
-              })
-            })
-        }
-        refreshPrinterData();
-        mainWindow.reload();
+      label: 'CSV', click: function (req, res) {
+        inserirDadosCSV()
+      },
+    },
+    {
+      label: 'Atualizar informações', click: function (req, res) {
+        getPrinterInformation()
       },
     },
     {

@@ -21,8 +21,8 @@ module.exports = function getHPInfo(ip, nome) {
     })
 
     session.get({ oid: '.1.3.6.1.2.1.43.11.1.1.9.1.2', }, function (error, data) {
-        if (kitManutencao = "noSuchInstance") {
-            kitManutencao = "-"
+        if (data[0].value == "noSuchInstance") {
+            kitManutencao = "-";
         } else {
             kitManutencao = data[0].value;
         }
