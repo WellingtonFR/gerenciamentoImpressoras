@@ -4,9 +4,9 @@ const database = require("../database/db")
 const Printers = require("../database/models/printerModel");
 const { findByName } = require("../controllers/printerController");
 
-const inserirDadosCSV = () => {
+const inserirDadosCSV = (caminho) => {
 
-    fs.createReadStream("./public/Impressoras.csv")
+    fs.createReadStream(caminho[0])
         .pipe(csv())
         .on("data", async (data) => {
 

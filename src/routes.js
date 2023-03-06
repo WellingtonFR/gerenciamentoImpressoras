@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { find } = require("./controllers/printerStatusController");
+const printerStatusController = require("./controllers/printerStatusController");
 const database = require("./database/db")
 
 router.get('/', async (req, res) => {
 
     let tabela = []
 
-    await find().then(dados => {
+    await printerStatusController.find().then(dados => {
         dados.forEach(printer => {
             tabela.push(printer.dataValues)
         });

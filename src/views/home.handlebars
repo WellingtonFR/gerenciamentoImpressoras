@@ -6,7 +6,8 @@
         <th>Status</th>
         <th onclick="sortTable(1)">Fila</th>
         <th onclick="sortTable(2)">IP</th>
-        <th onclick="sortTable(3)">Fabricante</th>
+        <th onclick="sortTable(3)">Serial</th>
+        <th onclick="sortTable(3)">Contador</th>
         <th onclick="sortTable(4)">Modelo</th>
         <th onclick="sortTable(5)">Toner (%)</th>
         <th onclick="sortTable(6)">Kit de manuteção (%)</th>
@@ -22,7 +23,8 @@
 
         <td class="text-left">{{this.nomeFila}}</td>
         <td><a href="http://{{this.enderecoFila}}" target="_blank">{{this.enderecoFila}}</a></td>
-        <td>{{this.fabricante}}</td>
+        <td>{{this.serial}}</td>
+        <td>{{this.contador}}</td>
         <td class="text-left">{{this.modelo}}</td>
 
         {{#if this.toner 10}}
@@ -73,8 +75,8 @@
   </div>
 </div>
 
-<form method="get" action="/">
-  <button id="refresh-float-button" VALUE="Atualizar">
+{{!-- <form method="get" action="/">
+  <button id="refresh-float-button" VALUE="Atualizar" onclick="getPrinterInformation()">
     <img src="images/reload.png" />
   </button>
-</form>
+</form> --}}

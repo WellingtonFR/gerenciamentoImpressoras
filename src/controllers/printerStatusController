@@ -1,10 +1,11 @@
+const { where } = require("sequelize")
 const dadosbase = require("../database/db")
 const PrinterStatus = require("../database/models/printerStatusModel")
 
 const find = async () => {
     let dados = await PrinterStatus.findAll(
         {
-            exclude: ["createdAt", "updatedAt"],
+            exclude: ["createdAt"],
             order: ["nomeFila"]
         }).catch(error => {
             console.log("Erro ao buscar as informacoes " + error)
@@ -54,9 +55,10 @@ const update = (dados) => {
         kitManutencao: dados.kitManutencao,
         contador: dados.contador,
         serial: dados.serial
-    }).catch(error => {
-        console.log("Erro ao salvar as informacoes da impressora: " + dados.nomeFila + " " + error)
-    })
+    }, { where: { nomeFila: dados.nomeFila } })
+        .catch(error => {
+            console.log("Erro ao atualizar as informacoes da impressora: " + dados.nomeFila + " " + error)
+        })
 }
 
 module.exports = {

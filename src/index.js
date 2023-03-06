@@ -1,12 +1,10 @@
-const { app, BrowserWindow, Tray, Menu } = require('electron');
+const { app, BrowserWindow, Tray, Menu, dialog } = require('electron');
 const path = require('path');
-const database = require("./database/db")
-const PrinterStatus = require("./database/models/printerStatusModel")
+const inserirDadosCSV = require('./functions/inserirDadosCSV');
+const getPrinterInformation = require('./controllers/getPrinterInformation');
 
 //express server
 const server = require('./app');
-const inserirDadosCSV = require('./functions/inserirDadosCSV');
-const getPrinterInformation = require('./controllers/getPrinterInformation');
 
 //Electron build
 
@@ -22,15 +20,16 @@ const createWindow = () => {
     icon: './public/images/icon.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true
+      nodeIntegration: true,
     },
   });
 
 
 
-  //mainWindow.loadFile(path.join(__dirname, 'index.html'));
   mainWindow.removeMenu();
+  //mainWindow.loadFile(path.join(__dirname, 'index.html'));
   mainWindow.loadURL('http://localhost:3002/');
+  mainWindow.maximize();
 
   let tray = new Tray('./public/images/icon48x48.png');
   let windowIsVisible;
@@ -40,18 +39,52 @@ const createWindow = () => {
       type: 'separator',
     },
     {
+      label: 'Importar', click: function (req, res) {
+        dialog.showOpenDialog({
+          properties: ['openFile'],
+          filters: [{ name: 'CSV', extensions: ['csv'] }]
+        }).then(result => {
+          if (result.canceled) {
+            console.log("Cancelado" + result.canceled);
+          } else {
+            inserirDadosCSV(result.filePaths);
+            dialog.showMessageBox(BrowserWindow.getFocusedWindow(), {
+              defaultId: 1,
+              type: "info",
+              title: "Importação de CSV",
+              message: "Importado com sucesso",
+              buttons: ["OK"]
+            });
+          }
+        }).catch(error => {
+          console.log("Erro ao buscar CSV: " + error)
+          dialog.showMessageBox(BrowserWindow.getFocusedWindow(), {
+            defaultId: 2,
+            type: "error",
+            title: "Importação de CSV",
+            message: "Erro ao importar: " + error,
+            buttons: ["OK"]
+          });
+        })
+      },
+    },
+    {
       label: 'Atualizar', click: function (req, res) {
-        mainWindow.webContents.send('/');
-      },
-    },
-    {
-      label: 'CSV', click: function (req, res) {
-        inserirDadosCSV()
-      },
-    },
-    {
-      label: 'Atualizar informações', click: function (req, res) {
-        getPrinterInformation()
+
+        getPrinterInformation();
+
+        let progress = 0;
+
+        const progressInterval = setInterval(() => {
+          progress += 0.025;
+          mainWindow.setProgressBar(progress);
+
+          if (progress >= 1) {
+            mainWindow.setProgressBar(-1);
+            clearInterval(progressInterval);
+            mainWindow.reload();
+          }
+        }, 120)
       },
     },
     {
@@ -85,6 +118,11 @@ const createWindow = () => {
     windowIsVisible = false;
   });
 
+  mainWindow.webContents.on('new-window', function (e, url) {
+    e.preventDefault();
+    require('electron').shell.openExternal(url);
+  });
+
   tray.on('click', () => {
     if (windowIsVisible) {
       mainWindow.hide();
@@ -102,6 +140,7 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+app.commandLine.appendSwitch('ignore-certificate-errors');
 app.on('ready', createWindow);
 
 // Quit when all windows are closed, except on macOS. There, it's common

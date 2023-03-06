@@ -2,11 +2,9 @@ const express = require('express');
 const hbs = require("express-handlebars");
 const port = 3002;
 const routes = require("./routes");
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 
 const db = require("./database/db")
-const inserirDadosCSV = require('./functions/inserirDadosCSV');
-const getPrinterInformation = require('./controllers/getPrinterInformation');
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 
 const app = express();
 app.use(express.json())
