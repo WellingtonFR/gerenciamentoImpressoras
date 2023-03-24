@@ -3,17 +3,18 @@
   padding: 0;
   box-sizing: border-box;
   border: none;
-  font-family: Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
   color: rgb(236, 236, 236);
   font-size: 14px;
 }
 
 body {
-  background: rgb(107, 107, 107);
+  background: rgb(26, 26, 26);
 }
 
 .container {
   width: 100%;
+  float: left;
 }
 
 .content {
@@ -131,6 +132,7 @@ a:hover {
   box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.28);
 }
 
+
 /* detalhes */
 
 #tabela-detalhes {
@@ -165,7 +167,57 @@ a:hover {
   border-bottom: 1px solid rgb(179, 179, 179);
 }
 
-#refresh-float-button {
+/* Float buttons */
+
+#list-float-button {
+  position: fixed;
+  bottom: 70px;
+  right: 10px;
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  border: 2px solid #999;
+}
+
+#list-float-button:hover {
+  background-color: rgb(73, 73, 73);
+}
+
+#list-float-button i {
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#card-float-button {
+  position: fixed;
+  bottom: 130px;
+  right: 10px;
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  border: 2px solid #999;
+}
+
+#card-float-button:hover {
+  background-color: rgb(73, 73, 73);
+}
+
+#card-float-button i {
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#settings-float-button {
   position: fixed;
   bottom: 10px;
   right: 10px;
@@ -173,17 +225,16 @@ a:hover {
   width: 50px;
   height: 50px;
   background-color: #333;
-  text-align: center;
   border: 2px solid #999;
 }
 
-#refresh-float-button:hover {
+#settings-float-button:hover {
   background-color: rgb(73, 73, 73);
 }
 
-#refresh-float-button img {
-  width: 40px;
-  height: 40px;
+#settings-float-button i {
+  width: 27px;
+  height: 27px;
   position: absolute;
   top: 50%;
   left: 50%;

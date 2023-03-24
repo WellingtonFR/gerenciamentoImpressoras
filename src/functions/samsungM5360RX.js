@@ -125,5 +125,6 @@ module.exports = async function getSamsungM5360RXInfo(ip, nome) {
         fabricante,
     };
 
+    session.close();
     return hpInfo;
 }

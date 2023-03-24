@@ -31,7 +31,7 @@ const createWindow = () => {
   mainWindow.loadURL('http://localhost:3002/');
   mainWindow.maximize();
 
-  let tray = new Tray('./public/images/icon48x48.png');
+  let tray = new Tray(path.join(__dirname, "..", "public", "images", "icon48x48.png"));
   let windowIsVisible;
 
   const template = [
@@ -76,13 +76,13 @@ const createWindow = () => {
         let progress = 0;
 
         const progressInterval = setInterval(() => {
-          progress += 0.025;
+          progress += 0.01;
           mainWindow.setProgressBar(progress);
 
           if (progress >= 1) {
             mainWindow.setProgressBar(-1);
             clearInterval(progressInterval);
-            mainWindow.reload();
+            mainWindow.loadURL('http://localhost:3002/');
           }
         }, 120)
       },

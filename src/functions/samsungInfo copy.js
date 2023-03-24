@@ -125,5 +125,6 @@ module.exports = async function getSamsungInfo(ip, nome) {
         fabricante,
     };
 
+    session.close();
     return hpInfo;
 }

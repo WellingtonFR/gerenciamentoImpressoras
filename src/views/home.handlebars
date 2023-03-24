@@ -3,7 +3,6 @@
   <div class="content">
     <table id="tabela-impressoras">
       <tr>
-        <th>Status</th>
         <th onclick="sortTable(1)">Fila</th>
         <th onclick="sortTable(2)">IP</th>
         <th onclick="sortTable(3)">Serial</th>
@@ -17,14 +16,14 @@
       {{#each tabela}}
       <tr>
 
-        {{#ifString this.rede "Online"}}
-
-        <td class="status-ball-ok"></td>
-
         <td class="text-left">{{this.nomeFila}}</td>
+
         <td><a href="http://{{this.enderecoFila}}" target="_blank">{{this.enderecoFila}}</a></td>
+
         <td>{{this.serial}}</td>
+
         <td>{{this.contador}}</td>
+
         <td class="text-left">{{this.modelo}}</td>
 
         {{#if this.toner 10}}
@@ -44,30 +43,6 @@
         {{else}}
         <td>{{this.unidadeImagem}}</td>
         {{/if}}
-        <td>
-          <form method="GET" action="/detalhes">
-            <input type="hidden" name="enderecoFila" value="{{this.enderecoFila}}" />
-            <input type="hidden" name="nomeFila" value="{{this.nomeFila}}" />
-            <input type="hidden" name="modelo" value="{{this.modelo}}" />
-            <input type="hidden" name="toner" value="{{this.toner}}" />
-            <input type="hidden" name="fabricante" value="{{this.fabricante}}" />
-            <input type="hidden" name="kitManutencao" value="{{this.kitManutencao}}" />
-            <input type="hidden" name="unidadeImagem" value="{{this.unidadeImagem}}" />
-          </form>
-        </td>
-        {{/ifString}}
-
-        {{#ifString this.rede "Offline"}}
-        <td class="status-ball-error"></td>
-        <td class="text-left">{{this.nomeFila}}</td>
-        <td>{{this.enderecoFila}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        {{/ifString}}
 
       </tr>
       {{/each}}

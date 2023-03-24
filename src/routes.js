@@ -10,7 +10,8 @@ router.get('/', async (req, res) => {
 
     await printerStatusController.find().then(dados => {
         dados.forEach(printer => {
-            tabela.push(printer.dataValues)
+            printer.dataValues.updatedAt = printer.dataValues.updatedAt.toLocaleString().replace(",", "");
+            tabela.push(printer.dataValues);
         });
     })
 

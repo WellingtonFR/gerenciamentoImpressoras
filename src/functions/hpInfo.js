@@ -123,5 +123,7 @@ module.exports = async function getHPInfo(ip, nome) {
         fabricante,
     };
 
+    session.close();
     return hpInfo;
+
 }
