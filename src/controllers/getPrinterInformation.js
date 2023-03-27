@@ -4,10 +4,11 @@ const Printers = require("../database/models/printerModel")
 const getHPInfo = require("../functions/hpInfo")
 const getSamsungInfo = require("../functions/samsung6555Info")
 const printerStatusController = require("./printerStatusController")
+const printerController = require("./printerController")
 
-const getPrinterInformation = (() => {
+const getPrinterInformation = (async () => {
 
-    Printers.findAll({ attributes: ["nomeFila", "enderecoFila"] }).then(data => {
+    await printerController.find().then(data => {
 
         data.forEach(printerData => {
 

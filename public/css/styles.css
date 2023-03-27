@@ -14,7 +14,6 @@ body {
 
 .container {
   width: 100%;
-  float: left;
 }
 
 .content {
@@ -169,7 +168,7 @@ a:hover {
 
 /* Float buttons */
 
-#list-float-button {
+/* #list-float-button {
   position: fixed;
   bottom: 70px;
   right: 10px;
@@ -217,21 +216,6 @@ a:hover {
   transform: translate(-50%, -50%);
 }
 
-#settings-float-button {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  border-radius: 10px;
-  width: 50px;
-  height: 50px;
-  background-color: #333;
-  border: 2px solid #999;
-}
-
-#settings-float-button:hover {
-  background-color: rgb(73, 73, 73);
-}
-
 #settings-float-button i {
   width: 27px;
   height: 27px;
@@ -239,4 +223,210 @@ a:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+} */
+
+#bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #333;
+}
+
+#bottom-bar-icons {
+  width: 220px;
+  margin: 0px auto;
+}
+
+.bottom-bar-icon {
+  margin: 10px;
+  float: left;
+}
+
+.bottom-bar-icon i:hover {
+  transition: 0.5s;
+  color: #888;
+}
+
+/* settings page */
+
+.card-view {
+  width: 80%;
+  height: 100%;
+  margin: 0px auto;
+  padding: 10px;
+}
+
+.card-settings {
+  position: relative;
+  width: 200px;
+  height: 80px;
+  background-color: #333;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 10px;
+  float: left;
+}
+
+.card-settings:hover {
+  transition: 0.5s;
+  background-color: #444;
+}
+
+.btn-settings-delete {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 25px;
+  background-color: 333;
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+  background-color: #333;
+}
+
+.btn-settings-delete:hover {
+  transition: 0.5s;
+  background-color: rgb(187, 0, 0);
+}
+
+.btn-float-1 {
+  position: fixed;
+  bottom: 70px;
+  right: 10px;
+  border-radius: 25px;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid gold;
+}
+
+.btn-float-1:hover {
+  transition: 1s;
+  background-color: rgb(33, 143, 0);
+}
+
+.btn-float-1:active {
+  transition: 0.1s;
+  border: 2px solid #333;
+}
+
+.btn-float-2 {
+  position: fixed;
+  bottom: 130px;
+  right: 10px;
+}
+
+/* setting modal */
+
+.modal {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(77, 77, 77, 0.7);
+  transition: all 0.4s;
+  color: #FFF;
+}
+
+.modal:target {
+  transition: 0.5s;
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-content {
+  border-radius: 4px;
+  position: relative;
+  width: 500px;
+  max-width: 90%;
+  background: #666;
+  padding: 1em 2em;
+}
+
+.modal-footer {
+  text-align: right;
+  margin-top: 50px;
+}
+
+.modal-button {
+  width: 100px;
+  margin-top: 20px;
+  padding: 10px;
+  text-decoration: none;
+  background-color: #444;
+  color: #FFF;
+  border-radius: 3px;
+}
+
+.btn-confirm:hover {
+  transition: 0.5s;
+  background-color: rgb(33, 143, 0);
+}
+
+.btn-cancel:hover {
+  transition: 0.5s;
+  background-color: rgb(187, 0, 0);
+}
+
+.form-group {
+  padding: 5px;
+  margin-top: 20px;
+  width: 100%;
+  height: 30px;
+}
+
+.form-group label {
+  padding: 10px;
+  margin-right: 10px;
+  width: 100px;
+  display: inline-block;
+  text-align: right;
+}
+
+.form-group input {
+  padding: 10px;
+  color: #222;
+  width: 250px;
+}
+
+.modal-buttons {
+  width: fit-content;
+  margin: 0px auto;
+  margin-top: 20px;
+}
+
+/* loader */
+
+.loader {
+  visibility: hidden;
+  opacity: 0;
+  position: fixed;
+  bottom: 70px;
+  right: 10px;
+  border-radius: 25px;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+}
+
+.loader:target {
+  transition: 0.5s;
+  visibility: visible;
+  opacity: 1;
+}
+
+.btn-active-green {
+  background-color: rgb(33, 143, 0);
 }

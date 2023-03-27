@@ -59,9 +59,21 @@ const update = (dados) => {
         })
 }
 
+const exclude = (nomeFila) => {
+
+    PrinterStatus.destroy({
+        where: {
+            nomeFila: nomeFila
+        }
+    }).catch(error => {
+        console.log("Erro ao excluir a impressora: " + dados.nomeFila + " " + error)
+    })
+}
+
 module.exports = {
     find,
     findByName,
     create,
     update,
+    exclude
 }

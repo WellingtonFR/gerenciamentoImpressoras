@@ -50,8 +50,19 @@
   </div>
 </div>
 
-{{!-- <form method="get" action="/">
-  <button id="refresh-float-button" VALUE="Atualizar" onclick="getPrinterInformation()">
-    <img src="images/reload.png" />
+<form method="get" action="/refresh">
+  <button class="btn-float-1">
+    <i class="fa-solid fa-arrows-rotate fa-fw fa-1x btn-load"></i>
   </button>
-</form> --}}
+</form>
+
+<script>
+  const btn_load = document.querySelector(".btn-load");
+  const btn_float_1 = document.querySelector(".btn-float-1");
+
+  btn_load.addEventListener("click", () => {
+    btn_load.classList.add("fa-spin");
+    btn_float_1.classList.add("btn-active-green");
+  });
+
+</script>

@@ -23,22 +23,18 @@ const findByName = async (nomeFila) => {
     return dados;
 }
 
-const create = (dados) => {
+const create = async (dados) => {
 
-    Printer.create({
-        nomeFila: dados.nomeFila,
-        enderecoFila: dados.enderecoFila,
-        rede: "Online",
-        modelo: dados.modelo,
-        fabricante: dados.fabricante,
-        toner: dados.toner,
-        unidadeImagem: dados.unidadeImagem,
-        kitManutencao: dados.kitManutencao,
-        contador: dados.contador,
-        serial: dados.serial
-    }).catch(error => {
-        console.log("Erro ao salvar as informacoes da impressora: " + dados.nomeFila + " " + error)
-    })
+    const existe = await Printer.findOne({ where: { nomeFila: dados.nomeFila } });
+
+    if (!existe) {
+        await Printer.create({
+            nomeFila: dados.nomeFila,
+            enderecoFila: dados.enderecoFila,
+        }).catch(error => {
+            console.log("Erro ao salvar as informacoes da impressora: " + dados.nomeFila + " " + error)
+        })
+    }
 }
 
 const update = (dados) => {
@@ -46,16 +42,19 @@ const update = (dados) => {
     Printer.create({
         nomeFila: dados.nomeFila,
         enderecoFila: dados.enderecoFila,
-        rede: "Online",
-        modelo: dados.modelo,
-        fabricante: dados.fabricante,
-        toner: dados.toner,
-        unidadeImagem: dados.unidadeImagem,
-        kitManutencao: dados.kitManutencao,
-        contador: dados.contador,
-        serial: dados.serial
     }).catch(error => {
-        console.log("Erro ao salvar as informacoes da impressora: " + dados.nomeFila + " " + error)
+        console.log("Erro ao atualizar as informacoes da impressora: " + dados.nomeFila + " " + error)
+    })
+}
+
+const exclude = (nomeFila) => {
+
+    Printer.destroy({
+        where: {
+            nomeFila: nomeFila
+        }
+    }).catch(error => {
+        console.log("Erro ao excluir a impressora: " + dados.nomeFila + " " + error)
     })
 }
 
@@ -64,4 +63,5 @@ module.exports = {
     findByName,
     create,
     update,
+    exclude
 }

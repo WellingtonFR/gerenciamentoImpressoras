@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="card-view">
+    {{#each tabela}}
+    <div class="card-settings">
+      <p>{{this.nomeFila}}</p>
+      <p>{{this.enderecoFila}}</p>
+
+      <form method="post" action="/settings/{{this.nomeFila}}">
+        <button type="submit" class="btn-settings-delete">&times;</button>
+      </form>
+    </div>
+    {{/each}}
+  </div>
+
+  <a href="#modal-settings-add">
+    <button class="btn-float-1">+</button>
+  </a>
+
+  <form method="get" action="/settings/add/csv">
+    <button class="btn-float-1 btn-float-2">
+      <i class="fa-solid fa-file-csv fa-fw fa-1x"></i>
+    </button>
+  </form>
+
+</div>
+
+<div id="modal-settings-add" class="modal">
+  <div class="modal-content">
+    <h1>Adicionar impressora</h1>
+
+    <form method="post" action="/settings/add/printer">
+
+      <div class="form-group">
+        <label for="nomeFila">Hostname</label>
+        <input type="text" id="nomeFila" name="nomeFila" placeholder="Hostname" />
+      </div>
+
+      <div class="form-group">
+        <label for="enderecoFila">IP</label>
+        <input type="text" id="enderecoFila" name="enderecoFila" placeholder="Endereço IP" />
+      </div>
+
+      <div class="modal-buttons">
+        <button type="submit" class="modal-button btn-confirm">Enviar</button>
+        <a href="#" class="modal-button btn-cancel"> Fechar </a>
+      </div>
+
+    </form>
+
+  </div>
+</div>

@@ -5,6 +5,7 @@ const getPrinterInformation = require('./controllers/getPrinterInformation');
 
 //express server
 const server = require('./app');
+const { render } = require('./app');
 
 //Electron build
 
@@ -27,7 +28,6 @@ const createWindow = () => {
 
 
   mainWindow.removeMenu();
-  //mainWindow.loadFile(path.join(__dirname, 'index.html'));
   mainWindow.loadURL('http://localhost:3002/');
   mainWindow.maximize();
 
@@ -37,55 +37,6 @@ const createWindow = () => {
   const template = [
     {
       type: 'separator',
-    },
-    {
-      label: 'Importar', click: function (req, res) {
-        dialog.showOpenDialog({
-          properties: ['openFile'],
-          filters: [{ name: 'CSV', extensions: ['csv'] }]
-        }).then(result => {
-          if (result.canceled) {
-            console.log("Cancelado" + result.canceled);
-          } else {
-            inserirDadosCSV(result.filePaths);
-            dialog.showMessageBox(BrowserWindow.getFocusedWindow(), {
-              defaultId: 1,
-              type: "info",
-              title: "Importação de CSV",
-              message: "Importado com sucesso",
-              buttons: ["OK"]
-            });
-          }
-        }).catch(error => {
-          console.log("Erro ao buscar CSV: " + error)
-          dialog.showMessageBox(BrowserWindow.getFocusedWindow(), {
-            defaultId: 2,
-            type: "error",
-            title: "Importação de CSV",
-            message: "Erro ao importar: " + error,
-            buttons: ["OK"]
-          });
-        })
-      },
-    },
-    {
-      label: 'Atualizar', click: function (req, res) {
-
-        getPrinterInformation();
-
-        let progress = 0;
-
-        const progressInterval = setInterval(() => {
-          progress += 0.01;
-          mainWindow.setProgressBar(progress);
-
-          if (progress >= 1) {
-            mainWindow.setProgressBar(-1);
-            clearInterval(progressInterval);
-            mainWindow.loadURL('http://localhost:3002/');
-          }
-        }, 120)
-      },
     },
     {
       label: 'Sair', click: function () {
