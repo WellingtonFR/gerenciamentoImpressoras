@@ -18,7 +18,14 @@
 
         <td class="text-left">{{this.nomeFila}}</td>
 
+        {{#ifString this.rede "Online"}}
         <td><a href="http://{{this.enderecoFila}}" target="_blank">{{this.enderecoFila}}</a></td>
+        {{/ifString}}
+
+
+        {{#ifString this.rede "Offline"}}
+        <td>{{this.enderecoFila}}</td>
+        {{/ifString}}
 
         <td>{{this.serial}}</td>
 

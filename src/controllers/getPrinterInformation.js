@@ -21,7 +21,7 @@ const getPrinterInformation = (async () => {
             //HPs
             axios.get(urlHP).then(response => {
 
-                if (response.status == "200") {
+                if (response.status == 200) {
 
                     getHPInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosHP => {
                         printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
@@ -42,9 +42,7 @@ const getPrinterInformation = (async () => {
             //Maioria das Samsung
             axios.get(urlSamsung).then(response => {
 
-                if (response.status == "200") {
-
-
+                if (response.status == 200) {
 
                     getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsung => {
                         printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
@@ -65,7 +63,7 @@ const getPrinterInformation = (async () => {
             //Samsung 6555
             axios.get(urlSamsung6555).then(response => {
 
-                if (response.status == "200") {
+                if (response.status == 200) {
 
                     getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsung6555 => {
                         printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
@@ -85,7 +83,7 @@ const getPrinterInformation = (async () => {
 
             axios.get(urlSamsungM5360RX).then(response => {
 
-                if (response.status == "200") {
+                if (response.status == 200) {
 
                     getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsungM5360RX => {
                         printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
@@ -103,9 +101,10 @@ const getPrinterInformation = (async () => {
 
             }).catch(error => { })
 
-            axios.get(url, { timeout: 5000 }).then(response => {
+            axios.get(url, { timeout: 7000 }).then(response => {
 
                 if (response.status != 200) {
+
                     printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
                         if (dadosRetorno == null) {
                             printerStatusController.create({
@@ -118,6 +117,7 @@ const getPrinterInformation = (async () => {
                                 modelo: "-",
                                 serial: "-",
                                 fabricante: "-",
+                                rede: "Offline"
                             });
                         } else {
                             printerStatusController.update({
@@ -130,6 +130,7 @@ const getPrinterInformation = (async () => {
                                 modelo: "-",
                                 serial: "-",
                                 fabricante: "-",
+                                rede: "Offline"
                             });
                         }
                     }).catch(error => {
@@ -138,11 +139,13 @@ const getPrinterInformation = (async () => {
                 }
 
             }).catch(() => {
+
                 printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
                     if (dadosRetorno == null) {
                         printerStatusController.create({
                             nomeFila: printerData.nomeFila,
                             enderecoFila: printerData.enderecoFila,
+                            rede: "Offline",
                             toner: "-",
                             unidadeImagem: "-",
                             kitManutencao: "-",
@@ -155,6 +158,7 @@ const getPrinterInformation = (async () => {
                         printerStatusController.update({
                             nomeFila: printerData.nomeFila,
                             enderecoFila: printerData.enderecoFila,
+                            rede: "Offline",
                             toner: "-",
                             unidadeImagem: "-",
                             kitManutencao: "-",
@@ -176,6 +180,5 @@ const getPrinterInformation = (async () => {
     })
 
 })
-
 
 module.exports = getPrinterInformation

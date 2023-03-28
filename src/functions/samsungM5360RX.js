@@ -18,6 +18,7 @@ module.exports = async function getSamsungM5360RXInfo(ip, nome) {
     let unidadeImagem = ""
     let kitManutencao = "-"
     let contador = ""
+    let rede = ""
 
     var session = new snmp.Session({ host: ip, port: 161, community: 'public' });
 
@@ -83,6 +84,7 @@ module.exports = async function getSamsungM5360RXInfo(ip, nome) {
                     reject();
                 } else {
                     serial = data[0].value;
+                    rede = "Online"
                     resolve();
                 }
             })
@@ -116,6 +118,7 @@ module.exports = async function getSamsungM5360RXInfo(ip, nome) {
     let hpInfo = {
         enderecoFila,
         nomeFila,
+        rede,
         kitManutencao,
         toner,
         unidadeImagem,

@@ -17,6 +17,7 @@ module.exports = async function getHPInfo(ip, nome) {
     let toner = ""
     let kitManutencao = ""
     let contador = ""
+    let rede = ""
 
     var session = new snmp.Session({ host: ip, port: 161, community: 'public' });
 
@@ -86,6 +87,7 @@ module.exports = async function getHPInfo(ip, nome) {
                     reject();
                 } else {
                     serial = data[0].value;
+                    rede = "Online"
                     resolve();
                 }
             })
@@ -115,12 +117,13 @@ module.exports = async function getHPInfo(ip, nome) {
     let hpInfo = {
         enderecoFila,
         nomeFila,
+        rede,
         toner,
         kitManutencao,
         contador,
         modelo,
         serial,
-        fabricante,
+        fabricante
     };
 
     session.close();

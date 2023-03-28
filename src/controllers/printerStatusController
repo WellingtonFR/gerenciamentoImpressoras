@@ -27,14 +27,14 @@ const create = (dados) => {
     PrinterStatus.create({
         nomeFila: dados.nomeFila,
         enderecoFila: dados.enderecoFila,
-        rede: "Online",
+        rede: dados.rede,
         modelo: dados.modelo,
         fabricante: dados.fabricante,
         toner: dados.toner,
         unidadeImagem: dados.unidadeImagem,
         kitManutencao: dados.kitManutencao,
         contador: dados.contador,
-        serial: dados.serial
+        serial: dados.serial,
     }).catch(error => {
         console.log("Erro ao salvar as informacoes da impressora: " + dados.nomeFila + " " + error)
     })
@@ -45,7 +45,7 @@ const update = (dados) => {
     PrinterStatus.update({
         nomeFila: dados.nomeFila,
         enderecoFila: dados.enderecoFila,
-        rede: "Online",
+        rede: dados.rede,
         modelo: dados.modelo,
         fabricante: dados.fabricante,
         toner: dados.toner,

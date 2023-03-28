@@ -29,7 +29,16 @@ router.get('/refresh', (req, res) => {
 
     setTimeout(() => {
         res.redirect("/")
-    }, 6000);
+    }, 10000);
+})
+
+router.get('/refresh/details', (req, res) => {
+
+    getPrinterInformation();
+
+    setTimeout(() => {
+        res.redirect("/details")
+    }, 10000);
 })
 
 router.get('/details', async (req, res) => {
@@ -43,6 +52,29 @@ router.get('/details', async (req, res) => {
     })
 
     res.render("details", { tabela: tabela })
+});
+
+router.post('/details/:nomeFila', async (req, res) => {
+
+    let nomeFila = req.params.nomeFila
+
+    await printerStatusController.findByName(nomeFila).then(dados => {
+        let data = {
+            nomeFila: dados.nomeFila,
+            enderecoFila: dados.enderecoFila,
+            rede: dados.rede,
+            modelo: dados.modelo,
+            serial: dados.serial,
+            fabricante: dados.fabricante,
+            toner: dados.toner,
+            unidadeImagem: dados.unidadeImagem,
+            kitManutencao: dados.kitManutencao,
+            contador: dados.contador,
+        }
+
+        res.render("modalDetails", { dados: data })
+    })
+
 });
 
 router.get('/settings', async (req, res) => {

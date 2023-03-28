@@ -17,7 +17,7 @@ const PrinterStatus = database.define('PrinterStatus', {
     },
     rede: {
         type: DataTypes.STRING,
-        defaultValue: "offline"
+        defaultValue: "Offline"
     },
     modelo: {
         type: DataTypes.STRING,

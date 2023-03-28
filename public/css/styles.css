@@ -49,6 +49,7 @@ a:hover {
   text-align: center;
   border-collapse: collapse;
   font-size: 12px;
+  margin-bottom: 70px;
 }
 
 #tabela-impressoras td {
@@ -75,155 +76,7 @@ a:hover {
   border-bottom: 1px solid #444;
 }
 
-.status-ball-error {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  margin-top: 4px;
-  background: rgb(255, 43, 43);
-  border-radius: 10px;
-}
-
-.status-ball-ok {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  margin-top: 4px;
-  background: rgb(51, 195, 34);
-  border-radius: 10px;
-}
-
-#btn-atualizar {
-  width: 150px;
-  height: 50px;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 5px;
-  background-color: rgb(43, 43, 43);
-  border-radius: 10px;
-}
-
-#btn-atualizar:hover {
-  transition: 0.5s;
-  width: 151px;
-  height: 50px;
-  background-color: rgb(31, 31, 31);
-  box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.28);
-}
-
-.btn-details {
-  display: block;
-  margin: 0px auto;
-  font-weight: bold;
-  width: 15px;
-  height: 15px;
-  line-height: 15px;
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-  background-color: rgb(212, 212, 212);
-  border-radius: 20px;
-}
-
-.btn-details:hover {
-  transition: 0.5s;
-  z-index: 999;
-  background-color: rgb(230, 230, 230);
-  box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.28);
-}
-
-
-/* detalhes */
-
-#tabela-detalhes {
-  width: 60%;
-  text-align: left;
-  background-color: rgb(26, 26, 26);
-  border-collapse: collapse;
-}
-
-#tabela-detalhes td {
-  padding: 3px;
-  padding-left: 10px;
-  border: none;
-}
-
-#tabela-detalhes th {
-  padding: 3px;
-  padding-left: 10px;
-  width: 30%;
-  background-color: rgb(26, 26, 26);
-  border: none;
-}
-
-#tabela-detalhes tr {
-  background-color: rgb(58, 58, 58);
-  border-bottom: 1px solid rgb(0, 0, 0);
-}
-
-#tabela-detalhes tr:hover {
-  transition: 0.4s;
-  background-color: rgb(88, 88, 88);
-  border-bottom: 1px solid rgb(179, 179, 179);
-}
-
-/* Float buttons */
-
-/* #list-float-button {
-  position: fixed;
-  bottom: 70px;
-  right: 10px;
-  border-radius: 10px;
-  width: 50px;
-  height: 50px;
-  background-color: #333;
-  border: 2px solid #999;
-}
-
-#list-float-button:hover {
-  background-color: rgb(73, 73, 73);
-}
-
-#list-float-button i {
-  width: 27px;
-  height: 27px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#card-float-button {
-  position: fixed;
-  bottom: 130px;
-  right: 10px;
-  border-radius: 10px;
-  width: 50px;
-  height: 50px;
-  background-color: #333;
-  border: 2px solid #999;
-}
-
-#card-float-button:hover {
-  background-color: rgb(73, 73, 73);
-}
-
-#card-float-button i {
-  width: 27px;
-  height: 27px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-#settings-float-button i {
-  width: 27px;
-  height: 27px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-} */
+/* bottom bar */
 
 #bottom-bar {
   position: fixed;
@@ -232,6 +85,7 @@ a:hover {
   width: 100%;
   height: 50px;
   background-color: #333;
+  box-shadow: 0px -1px 32px 6px #000;
 }
 
 #bottom-bar-icons {
@@ -375,8 +229,14 @@ a:hover {
   margin-top: 50px;
 }
 
+.modal h1 {
+  margin-bottom: 30px;
+}
+
 .modal-button {
-  width: 100px;
+  display: inline-block;
+  text-align: center;
+  width: 150px;
   margin-top: 20px;
   padding: 10px;
   text-decoration: none;
@@ -398,6 +258,10 @@ a:hover {
   color: #999;
 }
 
+.btn-confirm {
+  margin-right: 15px;
+}
+
 .btn-confirm:hover {
   transition: 0.5s;
   background-color: rgb(33, 143, 0);
@@ -405,7 +269,7 @@ a:hover {
 
 .btn-cancel:hover {
   transition: 0.5s;
-  background-color: rgb(187, 0, 0);
+  background-color: #b30000;
 }
 
 .form-group {
@@ -463,27 +327,49 @@ a:hover {
 
 .card-details {
   width: 200px;
-  height: 40px;
-  background-color: #333;
+  height: 50px;
   border-radius: 10px;
   margin: 5px;
-  padding: 10px;
   float: left;
   color: #FFF;
   text-align: center;
+  background-color: 666;
 }
 
-.card-details:hover {
+#card-details-online {
+  background-color: #058f00;
+}
+
+#card-details-online:hover {
   transition: 0.5s;
-  background-color: #555;
+  background-color: #06b600;
 }
 
-#modal-details .modal {
-  display: none;
+#card-details-offline {
+  background-color: #b30000;
 }
 
-#modal-details .modal:target {
-  display: block;
+#card-details-offline:hover {
+  transition: 0.5s;
+  background-color: #d60000;
+}
+
+#btn-details-submit {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  background-color: transparent;
+}
+
+#modal-details {
+  transition: 0.5s;
+  visibility: visible;
+  opacity: 1;
+  background-color: #333;
+}
+
+#modal-details .modal-content {
+  background-color: #666;
 }
 
 #modal-details h1 {

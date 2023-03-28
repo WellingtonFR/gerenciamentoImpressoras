@@ -25,15 +25,18 @@ const findByName = async (nomeFila) => {
 
 const create = async (dados) => {
 
-    const existe = await Printer.findOne({ where: { nomeFila: dados.nomeFila } });
+    if (dados.nomeFila != "" && dados.enderecoFila != "") {
 
-    if (!existe) {
-        await Printer.create({
-            nomeFila: dados.nomeFila,
-            enderecoFila: dados.enderecoFila,
-        }).catch(error => {
-            console.log("Erro ao salvar as informacoes da impressora: " + dados.nomeFila + " " + error)
-        })
+        const existe = await Printer.findOne({ where: { nomeFila: dados.nomeFila } });
+
+        if (!existe) {
+            await Printer.create({
+                nomeFila: dados.nomeFila,
+                enderecoFila: dados.enderecoFila,
+            }).catch(error => {
+                console.log("Erro ao salvar as informacoes da impressora: " + dados.nomeFila + " " + error)
+            })
+        }
     }
 }
 
