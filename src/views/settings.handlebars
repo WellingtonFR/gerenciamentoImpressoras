@@ -1,14 +1,27 @@
 <div class="container">
+
   <div class="card-view">
     {{#each tabela}}
-    <div class="card-settings">
-      <p>{{this.nomeFila}}</p>
-      <p>{{this.enderecoFila}}</p>
 
-      <form method="post" action="/settings/{{this.nomeFila}}">
-        <button type="submit" class="btn-settings-delete">&times;</button>
-      </form>
+    <div class="flip-card-settings">
+      <div class="flip-card-inner">
+
+        <div class="flip-card-front">
+          <p>{{this.nomeFila}}</p>
+          <p>{{this.enderecoFila}}</p>
+        </div>
+
+        <div class="flip-card-back">
+          <form method="post" action="/settings/{{this.nomeFila}}">
+            <button type="submit" class="submit-settings-delete">
+              <i class="fa-solid fa-circle-xmark fa-fw fa-3x"></i>
+            </button>
+          </form>
+        </div>
+
+      </div>
     </div>
+
     {{/each}}
   </div>
 

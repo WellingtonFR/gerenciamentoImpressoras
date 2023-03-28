@@ -32,7 +32,18 @@ router.get('/refresh', (req, res) => {
     }, 6000);
 })
 
-router.get('/cards', (req, res) => res.render("cards"));
+router.get('/details', async (req, res) => {
+
+    let tabela = []
+
+    await printerStatusController.find().then(dados => {
+        dados.forEach(printer => {
+            tabela.push(printer.dataValues);
+        });
+    })
+
+    res.render("details", { tabela: tabela })
+});
 
 router.get('/settings', async (req, res) => {
 
