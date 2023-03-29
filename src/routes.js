@@ -5,11 +5,10 @@ const printerStatusController = require("./controllers/printerStatusController")
 const printerController = require("./controllers/printerController");
 const database = require("./database/db");
 const { dialog, BrowserWindow } = require("electron");
-const inserirDadosCSV = require("./functions/inserirDadosCSV");
-const window = require("./index");
-const getPrinterInformation = require("./controllers/getPrinterInformation");
+const inserirDadosCSV = require("./snmp/inserirDadosCSV");
+const getPrinterLaserInformation = require("./controllers/getPrinterLaserInformation");
 
-router.get('/', async (req, res) => {
+router.get('/laser', async (req, res) => {
 
     let tabela = []
 
@@ -20,21 +19,44 @@ router.get('/', async (req, res) => {
         });
     })
 
-    res.render("home", { tabela: tabela })
+    res.render("laser", { tabela: tabela })
 });
 
-router.get('/refresh', (req, res) => {
+router.get('/laser/refresh', (req, res) => {
 
-    getPrinterInformation();
+    getPrinterLaserInformation();
 
     setTimeout(() => {
-        res.redirect("/")
+        res.redirect("/laser")
+    }, 10000);
+})
+
+router.get('/termica', async (req, res) => {
+
+    let tabela = []
+
+    await printerStatusController.find().then(dados => {
+        dados.forEach(printer => {
+            printer.dataValues.updatedAt = printer.dataValues.updatedAt.toLocaleString().replace(",", "");
+            tabela.push(printer.dataValues);
+        });
+    })
+
+    res.render("termica", { tabela: tabela })
+});
+
+router.get('/termica/refresh', (req, res) => {
+
+    getPrinterLaserInformation();
+
+    setTimeout(() => {
+        res.redirect("/termica")
     }, 10000);
 })
 
 router.get('/refresh/details', (req, res) => {
 
-    getPrinterInformation();
+    getPrinterLaserInformation();
 
     setTimeout(() => {
         res.redirect("/details")

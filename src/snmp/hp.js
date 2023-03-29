@@ -7,7 +7,7 @@ let oid_toner = ".1.3.6.1.2.1.43.11.1.1.9.1.1"
 let oid_kitManutencao = ".1.3.6.1.2.1.43.11.1.1.9.1.2"
 let oid_contador = ".1.3.6.1.2.1.43.10.2.1.4.1.1"
 
-module.exports = async function getHPInfo(ip, nome) {
+module.exports = async function HPInfo(ip, nome) {
 
     let enderecoFila = ""
     let nomeFila = ""

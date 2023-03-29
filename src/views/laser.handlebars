@@ -1,0 +1,75 @@
+<div class="container">
+
+  <div class="content">
+    <table id="tabela-impressoras">
+      <tr>
+        <th onclick="sortTable(1)">Fila</th>
+        <th onclick="sortTable(2)">IP</th>
+        <th onclick="sortTable(3)">Serial</th>
+        <th onclick="sortTable(3)">Contador</th>
+        <th onclick="sortTable(4)">Modelo</th>
+        <th onclick="sortTable(5)">Toner (%)</th>
+        <th onclick="sortTable(6)">Kit de manuteção (%)</th>
+        <th onclick="sortTable(7)">Unidade de imagem (%)</th>
+      </tr>
+
+      {{#each tabela}}
+      <tr>
+
+        <td class="text-left">{{this.nomeFila}}</td>
+
+        {{#ifString this.rede "Online"}}
+        <td><a href="http://{{this.enderecoFila}}" target="_blank">{{this.enderecoFila}}</a></td>
+        {{/ifString}}
+
+
+        {{#ifString this.rede "Offline"}}
+        <td>{{this.enderecoFila}}</td>
+        {{/ifString}}
+
+        <td>{{this.serial}}</td>
+
+        <td>{{this.contador}}</td>
+
+        <td class="text-left">{{this.modelo}}</td>
+
+        {{#if this.toner 10}}
+        <td class="error-color">{{this.toner}}</td>
+        {{else}}
+        <td>{{this.toner}}</td>
+        {{/if}}
+
+        {{#if this.kitManutencao 10}}
+        <td class="error-color">{{this.kitManutencao}}</td>
+        {{else}}
+        <td>{{this.kitManutencao}}</td>
+        {{/if}}
+
+        {{#if this.unidadeImagem 10}}
+        <td class="error-color">{{this.unidadeImagem}}</td>
+        {{else}}
+        <td>{{this.unidadeImagem}}</td>
+        {{/if}}
+
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+</div>
+
+<form method="get" action="/laser/refresh">
+  <button class="btn-float-1">
+    <i class="fa-solid fa-arrows-rotate fa-fw fa-1x btn-load"></i>
+  </button>
+</form>
+
+<script>
+  const btn_load = document.querySelector(".btn-load");
+  const btn_float_1 = document.querySelector(".btn-float-1");
+
+  btn_load.addEventListener("click", () => {
+    btn_load.classList.add("fa-spin");
+    btn_float_1.classList.add("btn-active-green");
+  });
+
+</script>

@@ -1,13 +1,13 @@
 const snmp = require('snmp-native');
 
 let oid_serial = ".1.3.6.1.2.1.43.5.1.1.17.1"
-let oid_modelo = ".1.3.6.1.4.1.236.11.5.1.1.1.1.0"
+let oid_modelo = ".1.3.6.1.2.1.43.5.1.1.16.1"
 let oid_fabricante = ".1.3.6.1.2.1.43.8.2.1.14.1.1"
-let oid_toner = ".1.3.6.1.4.1.236.11.5.1.1.3.22.0"
-let oid_unidadeImagem = ".1.3.6.1.2.1.43.11.1.1.9.1.2"
+let oid_toner = ".1.3.6.1.2.1.43.11.1.1.9.1.1"
+let oid_kitManutencao = ".1.3.6.1.2.1.43.11.1.1.9.1.2"
 let oid_contador = ".1.3.6.1.2.1.43.10.2.1.4.1.1"
 
-module.exports = async function getSamsungM5360RXInfo(ip, nome) {
+module.exports = async function HPInfo(ip, nome) {
 
     let enderecoFila = ""
     let nomeFila = ""
@@ -15,8 +15,7 @@ module.exports = async function getSamsungM5360RXInfo(ip, nome) {
     let modelo = ""
     let fabricante = ""
     let toner = ""
-    let unidadeImagem = ""
-    let kitManutencao = "-"
+    let kitManutencao = ""
     let contador = ""
     let rede = ""
 
@@ -38,13 +37,17 @@ module.exports = async function getSamsungM5360RXInfo(ip, nome) {
         })
     }
 
-    const save_unidadeImagem = () => {
+    const save_kitManutencao = () => {
         return new Promise((resolve, reject) => {
-            session.get({ oid: oid_unidadeImagem, }, function (error, data) {
+            session.get({ oid: oid_kitManutencao, }, function (error, data) {
                 if (error) {
                     reject();
                 } else {
-                    unidadeImagem = Math.round(data[0].value / 600);
+                    if (data[0].value == "noSuchInstance") {
+                        kitManutencao = "-";
+                    } else {
+                        kitManutencao = data[0].value;
+                    }
                     resolve();
                 }
             })
@@ -105,29 +108,25 @@ module.exports = async function getSamsungM5360RXInfo(ip, nome) {
     }
 
     await save_toner();
-    await save_unidadeImagem();
+    await save_kitManutencao();
     await save_contador();
     await save_modelo();
     await save_serial();
     await save_fabricante();
 
-    if (modelo == "M332x 382x 402x Series") {
-        unidadeImagem = "-"
-    }
-
     let hpInfo = {
         enderecoFila,
         nomeFila,
         rede,
-        kitManutencao,
         toner,
-        unidadeImagem,
+        kitManutencao,
         contador,
         modelo,
         serial,
-        fabricante,
+        fabricante
     };
 
     session.close();
     return hpInfo;
+
 }

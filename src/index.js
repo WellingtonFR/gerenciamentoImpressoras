@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Tray, Menu, dialog } = require('electron');
 const path = require('path');
-const inserirDadosCSV = require('./functions/inserirDadosCSV');
-const getPrinterInformation = require('./controllers/getPrinterInformation');
+const inserirDadosCSV = require('./snmp/inserirDadosCSV');
+const getPrinterLaserInformation = require('./controllers/getPrinterLaserInformation');
 
 //express server
 const server = require('./app');
@@ -28,7 +28,7 @@ const createWindow = () => {
 
 
   mainWindow.removeMenu();
-  mainWindow.loadURL('http://localhost:3002/');
+  mainWindow.loadURL('http://localhost:3002/laser');
   mainWindow.maximize();
 
   let tray = new Tray(path.join(__dirname, "..", "public", "images", "icon48x48.png"));
