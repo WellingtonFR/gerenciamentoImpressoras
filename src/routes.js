@@ -1,18 +1,20 @@
 const express = require("express");
 const router = express.Router();
 
-const printerStatusController = require("./controllers/printerStatusController");
+const PrinterLaserStatusController = require("./controllers/PrinterLaserStatusController");
+const PrinterTermicaStatusController = require("./controllers/PrinterTermicaStatusController");
 const printerController = require("./controllers/printerController");
 const database = require("./database/db");
 const { dialog, BrowserWindow } = require("electron");
 const inserirDadosCSV = require("./snmp/inserirDadosCSV");
 const getPrinterLaserInformation = require("./controllers/getPrinterLaserInformation");
+const getPrinterTermicaInformation = require("./controllers/getPrinterTermicaInformation");
 
 router.get('/laser', async (req, res) => {
 
     let tabela = []
 
-    await printerStatusController.find().then(dados => {
+    await PrinterLaserStatusController.find().then(dados => {
         dados.forEach(printer => {
             printer.dataValues.updatedAt = printer.dataValues.updatedAt.toLocaleString().replace(",", "");
             tabela.push(printer.dataValues);
@@ -25,6 +27,7 @@ router.get('/laser', async (req, res) => {
 router.get('/laser/refresh', (req, res) => {
 
     getPrinterLaserInformation();
+    getPrinterTermicaInformation();
 
     setTimeout(() => {
         res.redirect("/laser")
@@ -35,9 +38,8 @@ router.get('/termica', async (req, res) => {
 
     let tabela = []
 
-    await printerStatusController.find().then(dados => {
+    await PrinterTermicaStatusController.find().then(dados => {
         dados.forEach(printer => {
-            printer.dataValues.updatedAt = printer.dataValues.updatedAt.toLocaleString().replace(",", "");
             tabela.push(printer.dataValues);
         });
     })
@@ -47,7 +49,8 @@ router.get('/termica', async (req, res) => {
 
 router.get('/termica/refresh', (req, res) => {
 
-    getPrinterLaserInformation();
+    getPrinterTermicaInformation();
+    getPrinterTermicaInformation();
 
     setTimeout(() => {
         res.redirect("/termica")
@@ -57,6 +60,7 @@ router.get('/termica/refresh', (req, res) => {
 router.get('/refresh/details', (req, res) => {
 
     getPrinterLaserInformation();
+    getPrinterTermicaInformation();
 
     setTimeout(() => {
         res.redirect("/details")
@@ -67,7 +71,13 @@ router.get('/details', async (req, res) => {
 
     let tabela = []
 
-    await printerStatusController.find().then(dados => {
+    await PrinterLaserStatusController.find().then(dados => {
+        dados.forEach(printer => {
+            tabela.push(printer.dataValues);
+        });
+    })
+
+    await PrinterTermicaStatusController.find().then(dados => {
         dados.forEach(printer => {
             tabela.push(printer.dataValues);
         });
@@ -80,7 +90,7 @@ router.post('/details/:nomeFila', async (req, res) => {
 
     let nomeFila = req.params.nomeFila
 
-    await printerStatusController.findByName(nomeFila).then(dados => {
+    await PrinterLaserStatusController.findByName(nomeFila).then(dados => {
         let data = {
             nomeFila: dados.nomeFila,
             enderecoFila: dados.enderecoFila,
@@ -148,7 +158,8 @@ router.get('/settings/add/csv', (req, res) => {
 router.post("/settings/:nomeFila", async (req, res) => {
 
     await printerController.exclude(req.params.nomeFila);
-    await printerStatusController.exclude(req.params.nomeFila);
+    await PrinterLaserStatusController.exclude(req.params.nomeFila);
+    await PrinterTermicaStatusController.exclude(req.params.nomeFila);
 
     res.redirect("/settings")
 });

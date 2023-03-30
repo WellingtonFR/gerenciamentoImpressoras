@@ -6,11 +6,17 @@
         <th onclick="sortTable(1)">Fila</th>
         <th onclick="sortTable(2)">IP</th>
         <th onclick="sortTable(3)">Serial</th>
-        <th onclick="sortTable(3)">Contador</th>
         <th onclick="sortTable(4)">Modelo</th>
-        <th onclick="sortTable(5)">Toner (%)</th>
-        <th onclick="sortTable(6)">Kit de manuteção (%)</th>
-        <th onclick="sortTable(7)">Unidade de imagem (%)</th>
+        <th onclick="sortTable(3)">Contador</th>
+        <th onclick="sortTable(6)">Tonalidade</th>
+        <th onclick="sortTable(5)">Velocidade</th>
+        <th onclick="sortTable(7)">Largura</th>
+        <th onclick="sortTable(8)">Método</th>
+        <th onclick="sortTable(9)">Sensor</th>
+        <th onclick="sortTable(10)">Rede</th>
+        <th onclick="sortTable(11)">Cabeça</th>
+        <th onclick="sortTable(12)">Pause</th>
+
       </tr>
 
       {{#each tabela}}
@@ -28,28 +34,16 @@
         {{/ifString}}
 
         <td>{{this.serial}}</td>
-
-        <td>{{this.contador}}</td>
-
         <td class="text-left">{{this.modelo}}</td>
-
-        {{#if this.toner 10}}
-        <td class="error-color">{{this.toner}}</td>
-        {{else}}
-        <td>{{this.toner}}</td>
-        {{/if}}
-
-        {{#if this.kitManutencao 10}}
-        <td class="error-color">{{this.kitManutencao}}</td>
-        {{else}}
-        <td>{{this.kitManutencao}}</td>
-        {{/if}}
-
-        {{#if this.unidadeImagem 10}}
-        <td class="error-color">{{this.unidadeImagem}}</td>
-        {{else}}
-        <td>{{this.unidadeImagem}}</td>
-        {{/if}}
+        <td>{{this.contador}}</td>
+        <td>{{this.tonalidade}}</td>
+        <td>{{this.velocidade}}</td>
+        <td>{{this.largura_etiqueta}}</td>
+        <td>{{this.metodo_impressao}}</td>
+        <td>{{this.tipo_sensor}}</td>
+        <td>{{this.rede_conectada}}</td>
+        <td>{{this.status_cabeca}}</td>
+        <td>{{this.status_pause}}</td>
 
       </tr>
       {{/each}}
@@ -57,7 +51,7 @@
   </div>
 </div>
 
-<form method="get" action="/refresh">
+<form method="get" action="/termica/refresh">
   <button class="btn-float-1">
     <i class="fa-solid fa-arrows-rotate fa-fw fa-1x btn-load"></i>
   </button>

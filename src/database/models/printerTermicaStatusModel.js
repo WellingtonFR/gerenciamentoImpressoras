@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const database = require("../db");
 
-const PrinterStatus = database.define('PrinterStatus', {
+const PrinterTermicaStatusModel = database.define('PrinterTermicaStatus', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -19,11 +19,11 @@ const PrinterStatus = database.define('PrinterStatus', {
         type: DataTypes.STRING,
         defaultValue: "Offline"
     },
-    modelo: {
+    serial: {
         type: DataTypes.STRING,
         defaultValue: "-"
     },
-    serial: {
+    modelo: {
         type: DataTypes.STRING,
         defaultValue: "-"
     },
@@ -31,19 +31,39 @@ const PrinterStatus = database.define('PrinterStatus', {
         type: DataTypes.STRING,
         defaultValue: "-"
     },
-    toner: {
-        type: DataTypes.STRING,
-        defaultValue: "-"
-    },
-    unidadeImagem: {
-        type: DataTypes.STRING,
-        defaultValue: "-"
-    },
-    kitManutencao: {
-        type: DataTypes.STRING,
-        defaultValue: "-"
-    },
     contador: {
+        type: DataTypes.STRING,
+        defaultValue: "-"
+    },
+    velocidade: {
+        type: DataTypes.STRING,
+        defaultValue: "-"
+    },
+    tonalidade: {
+        type: DataTypes.STRING,
+        defaultValue: "-"
+    },
+    largura_etiqueta: {
+        type: DataTypes.STRING,
+        defaultValue: "-"
+    },
+    metodo_impressao: {
+        type: DataTypes.STRING,
+        defaultValue: "-"
+    },
+    tipo_sensor: {
+        type: DataTypes.STRING,
+        defaultValue: "-"
+    },
+    rede_conectada: {
+        type: DataTypes.STRING,
+        defaultValue: "-"
+    },
+    status_cabeca: {
+        type: DataTypes.STRING,
+        defaultValue: "-"
+    },
+    status_pause: {
         type: DataTypes.STRING,
         defaultValue: "-"
     }
@@ -51,4 +71,4 @@ const PrinterStatus = database.define('PrinterStatus', {
     timestamps: true,
 });
 
-module.exports = PrinterStatus;
+module.exports = PrinterTermicaStatusModel;

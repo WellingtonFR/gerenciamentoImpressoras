@@ -1,9 +1,7 @@
 const axios = require("axios")
 const database = require("../database/db")
-const Printers = require("../database/models/printerModel")
-const getHPInfo = require("../snmp/hp")
-const getSamsungInfo = require("../snmp/samsung")
-const printerStatusController = require("./printerStatusController")
+const getZebraInfo = require("../snmp/zebra")
+const PrinterTermicaStatusController = require("./printerTermicaStatusController")
 const printerController = require("./printerController")
 
 const getPrinterTermicaInformation = (async () => {
@@ -13,21 +11,21 @@ const getPrinterTermicaInformation = (async () => {
         data.forEach(printerData => {
 
             let url = "http://" + printerData.enderecoFila
-            let urlZebra = "http://" + printerData.enderecoFila + "/config.html";
-            let urlHoneywell = "http://" + printerData.enderecoFila + "/index.lua";
+            let urlZebra = "http://" + printerData.enderecoFila + "/setadv";
+            // let urlHoneywell = "http://" + printerData.enderecoFila + "/index.lua";
 
 
-            //HPs
+            //Zebra
             axios.get(urlZebra).then(response => {
 
                 if (response.status == 200) {
 
-                    getHPInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosHP => {
-                        printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                    getZebraInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosZebra => {
+                        PrinterTermicaStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
                             if (dadosRetorno == null) {
-                                printerStatusController.create(dadosHP);
+                                PrinterTermicaStatusController.create(dadosZebra);
                             } else {
-                                printerStatusController.update(dadosHP);
+                                PrinterTermicaStatusController.update(dadosZebra);
                             }
                         }).catch(error => {
                             console.log("Erro ao buscar informacoes na base status impressoras: " + error);
@@ -38,98 +36,68 @@ const getPrinterTermicaInformation = (async () => {
 
             }).catch(error => { })
 
-            //Maioria das Samsung
-            axios.get(urlSamsung).then(response => {
+            //Honeywell
+            // axios.get(urlSamsung).then(response => {
 
-                if (response.status == 200) {
+            //     if (response.status == 200) {
 
-                    getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsung => {
-                        printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
-                            if (dadosRetorno == null) {
-                                printerStatusController.create(dadosSamsung);
-                            } else {
-                                printerStatusController.update(dadosSamsung);
-                            }
-                        }).catch(error => {
-                            console.log("Erro ao buscar informacoes na base status impressoras: " + error);
-                        })
+            //         getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsung => {
+            //             PrinterTermicaStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+            //                 if (dadosRetorno == null) {
+            //                     PrinterTermicaStatusController.create(dadosSamsung);
+            //                 } else {
+            //                     PrinterTermicaStatusController.update(dadosSamsung);
+            //                 }
+            //             }).catch(error => {
+            //                 console.log("Erro ao buscar informacoes na base status impressoras: " + error);
+            //             })
 
-                    })
-                }
+            //         })
+            //     }
 
-            }).catch(error => { })
+            // }).catch(error => { })
 
-            //Samsung 6555
-            axios.get(urlSamsung6555).then(response => {
-
-                if (response.status == 200) {
-
-                    getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsung6555 => {
-                        printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
-                            if (dadosRetorno == null) {
-                                printerStatusController.create(dadosSamsung6555);
-                            } else {
-                                printerStatusController.update(dadosSamsung6555);
-                            }
-                        }).catch(error => {
-                            console.log("Erro ao buscar informacoes na base status impressoras: " + error);
-                        })
-
-                    })
-                }
-
-            }).catch(error => { })
-
-            axios.get(urlSamsungM5360RX).then(response => {
-
-                if (response.status == 200) {
-
-                    getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsungM5360RX => {
-                        printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
-                            if (dadosRetorno == null) {
-                                printerStatusController.create(dadosSamsungM5360RX);
-                            } else {
-                                printerStatusController.update(dadosSamsungM5360RX);
-                            }
-                        }).catch(error => {
-                            console.log("Erro ao buscar informacoes na base status impressoras: " + error);
-                        })
-
-                    })
-                }
-
-            }).catch(error => { })
-
+            //Erros: não conexão
             axios.get(url, { timeout: 7000 }).then(response => {
 
                 if (response.status != 200) {
 
-                    printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                    PrinterTermicaStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
                         if (dadosRetorno == null) {
-                            printerStatusController.create({
-                                nomeFila: printerData.nomeFila,
+                            PrinterTermicaStatusController.create({
                                 enderecoFila: printerData.enderecoFila,
-                                toner: "-",
-                                unidadeImagem: "-",
-                                kitManutencao: "-",
-                                contador: "-",
-                                modelo: "-",
+                                nomeFila: printerData.nomeFila,
+                                rede: "Offline",
                                 serial: "-",
+                                modelo: "-",
                                 fabricante: "-",
-                                rede: "Offline"
+                                contador: "-",
+                                velocidade: "-",
+                                tonalidade: "-",
+                                largura_etiqueta: "-",
+                                metodo_impressao: "-",
+                                tipo_sensor: "-",
+                                rede_conectada: "-",
+                                status_cabeca: "-",
+                                status_pause: "-",
                             });
                         } else {
-                            printerStatusController.update({
-                                nomeFila: printerData.nomeFila,
+                            PrinterTermicaStatusController.update({
                                 enderecoFila: printerData.enderecoFila,
-                                toner: "-",
-                                unidadeImagem: "-",
-                                kitManutencao: "-",
-                                contador: "-",
-                                modelo: "-",
+                                nomeFila: printerData.nomeFila,
+                                rede: "Offline",
                                 serial: "-",
+                                modelo: "-",
                                 fabricante: "-",
-                                rede: "Offline"
+                                contador: "-",
+                                velocidade: "-",
+                                tonalidade: "-",
+                                largura_etiqueta: "-",
+                                metodo_impressao: "-",
+                                tipo_sensor: "-",
+                                rede_conectada: "-",
+                                status_cabeca: "-",
+                                status_pause: "-",
                             });
                         }
                     }).catch(error => {
@@ -139,32 +107,42 @@ const getPrinterTermicaInformation = (async () => {
 
             }).catch(() => {
 
-                printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                PrinterTermicaStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
                     if (dadosRetorno == null) {
-                        printerStatusController.create({
-                            nomeFila: printerData.nomeFila,
+                        PrinterTermicaStatusController.create({
                             enderecoFila: printerData.enderecoFila,
+                            nomeFila: printerData.nomeFila,
                             rede: "Offline",
-                            toner: "-",
-                            unidadeImagem: "-",
-                            kitManutencao: "-",
-                            contador: "-",
-                            modelo: "-",
                             serial: "-",
+                            modelo: "-",
                             fabricante: "-",
+                            contador: "-",
+                            velocidade: "-",
+                            tonalidade: "-",
+                            largura_etiqueta: "-",
+                            metodo_impressao: "-",
+                            tipo_sensor: "-",
+                            rede_conectada: "-",
+                            status_cabeca: "-",
+                            status_pause: "-",
                         });
                     } else {
-                        printerStatusController.update({
-                            nomeFila: printerData.nomeFila,
+                        PrinterTermicaStatusController.update({
                             enderecoFila: printerData.enderecoFila,
+                            nomeFila: printerData.nomeFila,
                             rede: "Offline",
-                            toner: "-",
-                            unidadeImagem: "-",
-                            kitManutencao: "-",
-                            contador: "-",
-                            modelo: "-",
                             serial: "-",
+                            modelo: "-",
                             fabricante: "-",
+                            contador: "-",
+                            velocidade: "-",
+                            tonalidade: "-",
+                            largura_etiqueta: "-",
+                            metodo_impressao: "-",
+                            tipo_sensor: "-",
+                            rede_conectada: "-",
+                            status_cabeca: "-",
+                            status_pause: "-",
                         });
                     }
                 }).catch(error => {

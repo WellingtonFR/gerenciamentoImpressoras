@@ -3,7 +3,7 @@ const database = require("../database/db")
 const Printers = require("../database/models/printerModel")
 const getHPInfo = require("../snmp/hp")
 const getSamsungInfo = require("../snmp/samsung")
-const printerStatusController = require("./printerStatusController")
+const PrinterLaserStatusController = require("./PrinterLaserStatusController")
 const printerController = require("./printerController")
 
 const getPrinterLaserInformation = (async () => {
@@ -22,11 +22,11 @@ const getPrinterLaserInformation = (async () => {
                 if (response.status == 200) {
 
                     getHPInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosHP => {
-                        printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                        PrinterLaserStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
                             if (dadosRetorno == null) {
-                                printerStatusController.create(dadosHP);
+                                PrinterLaserStatusController.create(dadosHP);
                             } else {
-                                printerStatusController.update(dadosHP);
+                                PrinterLaserStatusController.update(dadosHP);
                             }
                         }).catch(error => {
                             console.log("Erro ao buscar informacoes na base status impressoras: " + error);
@@ -43,11 +43,11 @@ const getPrinterLaserInformation = (async () => {
                 if (response.status == 200) {
 
                     getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsung => {
-                        printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                        PrinterLaserStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
                             if (dadosRetorno == null) {
-                                printerStatusController.create(dadosSamsung);
+                                PrinterLaserStatusController.create(dadosSamsung);
                             } else {
-                                printerStatusController.update(dadosSamsung);
+                                PrinterLaserStatusController.update(dadosSamsung);
                             }
                         }).catch(error => {
                             console.log("Erro ao buscar informacoes na base status impressoras: " + error);
@@ -62,9 +62,9 @@ const getPrinterLaserInformation = (async () => {
 
                 if (response.status != 200) {
 
-                    printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                    PrinterLaserStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
                         if (dadosRetorno == null) {
-                            printerStatusController.create({
+                            PrinterLaserStatusController.create({
                                 nomeFila: printerData.nomeFila,
                                 enderecoFila: printerData.enderecoFila,
                                 rede: "Offline",
@@ -77,7 +77,7 @@ const getPrinterLaserInformation = (async () => {
                                 fabricante: "-"
                             });
                         } else {
-                            printerStatusController.update({
+                            PrinterLaserStatusController.update({
                                 nomeFila: printerData.nomeFila,
                                 enderecoFila: printerData.enderecoFila,
                                 rede: "Offline",
@@ -97,9 +97,9 @@ const getPrinterLaserInformation = (async () => {
 
             }).catch(() => {
 
-                printerStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                PrinterLaserStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
                     if (dadosRetorno == null) {
-                        printerStatusController.create({
+                        PrinterLaserStatusController.create({
                             nomeFila: printerData.nomeFila,
                             enderecoFila: printerData.enderecoFila,
                             rede: "Offline",
@@ -112,7 +112,7 @@ const getPrinterLaserInformation = (async () => {
                             fabricante: "-",
                         });
                     } else {
-                        printerStatusController.update({
+                        PrinterLaserStatusController.update({
                             nomeFila: printerData.nomeFila,
                             enderecoFila: printerData.enderecoFila,
                             rede: "Offline",
