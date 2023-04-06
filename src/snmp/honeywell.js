@@ -1,17 +1,17 @@
 const snmp = require('snmp-native');
 
-let oid_serial = ".1.3.6.1.4.1.10642.1.9.0"
-let oid_modelo = ".1.3.6.1.2.1.1.5.0"
-let oid_fabricante = ".1.3.6.1.4.1.10642.1.11.0"
-let oid_contador = ".1.3.6.1.4.1.10642.200.17.0"
-let oid_velocidade = ".1.3.6.1.4.1.10642.6.5.0"
-let oid_tonEscuro = ".1.3.6.1.4.1.10642.6.2.0"
-let oid_larguraEtq = ".1.3.6.1.4.1.10642.8.4.0"
-let oid_metodoImpressao = ".1.3.6.1.4.1.10642.2.10.4.1.0"
-let oid_redeConectada = ".1.3.6.1.4.1.10642.20.6.1.12.0"
-let oid_tipoSensor = ".1.3.6.1.4.1.10642.200.8.0"
-let oid_statusCabeca = ".1.3.6.1.4.1.10642.2.1.1.0"
-let oid_statusPause = ".1.3.6.1.4.1.11.2.3.9.1.1.2.1.0"
+let oid_serial = ".1.3.6.1.2.1.43.5.1.1.17.1"
+let oid_modelo = ".1.3.6.1.4.1.1963.20.10.5.4.0"
+// let oid_fabricante = ""
+let oid_contador = ".1.3.6.1.2.1.43.10.2.1.4.1"
+let oid_velocidade = ".1.3.6.1.4.1.1963.20.10.10.10.1.4.0"
+let oid_tonEscuro = ".1.3.6.1.4.1.1963.20.10.20.15.5.1.1.2.0"
+let oid_larguraEtq = ".1.3.6.1.4.1.1963.20.10.15.15.5.1.8.0"
+let oid_metodoImpressao = ".1.3.6.1.2.1.43.11.1.1.6.1.0"
+// let oid_redeConectada = ""
+// let oid_tipoSensor = ".1.3.6.1.2.1.43.11.1.1.6.1.1"
+let oid_statusCabeca = ".1.3.6.1.2.1.43.18.1.1.7.2"
+// let oid_statusPause = ""
 
 module.exports = async function honeywellInfo(ip, nome) {
 
@@ -20,14 +20,14 @@ module.exports = async function honeywellInfo(ip, nome) {
     let serial = ""
     let rede = ""
     let modelo = ""
-    let fabricante = ""
+    let fabricante = "Honeywell"
     let contador = ""
     let velocidade = ""
     let tonalidade = ""
     let largura_etiqueta = ""
     let metodo_impressao = ""
-    let rede_conectada = ""
-    let tipo_sensor = ""
+    let rede_conectada = "Cabeada"
+    let tipo_sensor = "-"
     let status_cabeca = ""
     let status_pause = ""
 
@@ -63,18 +63,18 @@ module.exports = async function honeywellInfo(ip, nome) {
         })
     }
 
-    const save_fabricante = () => {
-        return new Promise((resolve, reject) => {
-            session.get({ oid: oid_fabricante, }, function (error, data) {
-                if (error) {
-                    reject();
-                } else {
-                    fabricante = data[0].value;
-                    resolve();
-                }
-            })
-        })
-    }
+    // const save_fabricante = () => {
+    //     return new Promise((resolve, reject) => {
+    //         session.get({ oid: oid_fabricante, }, function (error, data) {
+    //             if (error) {
+    //                 reject();
+    //             } else {
+    //                 fabricante = data[0].value;
+    //                 resolve();
+    //             }
+    //         })
+    //     })
+    // }
 
     const save_contador = () => {
         return new Promise((resolve, reject) => {
@@ -134,38 +134,44 @@ module.exports = async function honeywellInfo(ip, nome) {
                 if (error) {
                     reject();
                 } else {
-                    metodo_impressao = data[0].value;
+                    if (data[0].value == "Ribbon(TTR)") {
+                        metodo_impressao = "Transf. térmica";
+                    } else if (data[0].value == "No Ribbon(DT)") {
+                        metodo_impressao = "Térmico direto";
+                    } else {
+                        metodo_impressao = data[0].value;
+                    }
                     resolve();
                 }
             })
         })
     }
 
-    const save_redeConectada = () => {
-        return new Promise((resolve, reject) => {
-            session.get({ oid: oid_redeConectada, }, function (error, data) {
-                if (error) {
-                    reject();
-                } else {
-                    rede_conectada = data[0].value;
-                    resolve();
-                }
-            })
-        })
-    }
+    // const save_redeConectada = () => {
+    //     return new Promise((resolve, reject) => {
+    //         session.get({ oid: oid_redeConectada, }, function (error, data) {
+    //             if (error) {
+    //                 reject();
+    //             } else {
+    //                 rede_conectada = "Cabeada";
+    //                 resolve();
+    //             }
+    //         })
+    //     })
+    // }
 
-    const save_tipoSensor = () => {
-        return new Promise((resolve, reject) => {
-            session.get({ oid: oid_tipoSensor, }, function (error, data) {
-                if (error) {
-                    reject();
-                } else {
-                    tipo_sensor = data[0].value;
-                    resolve();
-                }
-            })
-        })
-    }
+    // const save_tipoSensor = () => {
+    //     return new Promise((resolve, reject) => {
+    //         session.get({ oid: oid_tipoSensor, }, function (error, data) {
+    //             if (error) {
+    //                 reject();
+    //             } else {
+    //                 tipo_sensor = "data[0].value";
+    //                 resolve();
+    //             }
+    //         })
+    //     })
+    // }
 
     const save_statusCabeca = () => {
         return new Promise((resolve, reject) => {
@@ -173,38 +179,44 @@ module.exports = async function honeywellInfo(ip, nome) {
                 if (error) {
                     reject();
                 } else {
-                    status_cabeca = data[0].value;
+                    if (data[0].value == 18) {
+                        status_cabeca = "Aberto";
+                        status_pause = "Sim"
+                    } else {
+                        status_cabeca = "Fechado";
+                        status_pause = "Não"
+                    }
                     resolve();
                 }
             })
         })
     }
 
-    const save_statusPause = () => {
-        return new Promise((resolve, reject) => {
-            session.get({ oid: oid_statusPause, }, function (error, data) {
-                if (error) {
-                    reject();
-                } else {
-                    status_pause = data[0].value;
-                    resolve();
-                }
-            })
-        })
-    }
+    // const save_statusPause = () => {
+    //     return new Promise((resolve, reject) => {
+    //         session.get({ oid: oid_statusPause, }, function (error, data) {
+    //             if (error) {
+    //                 reject();
+    //             } else {
+    //                 status_pause = data[0].value;
+    //                 resolve();
+    //             }
+    //         })
+    //     })
+    // }
 
     await save_serial();
     await save_modelo();
-    await save_fabricante();
+    // await save_fabricante();
     await save_contador();
     await save_velocidade();
     await save_tonEscuro();
     await save_larguraEtq();
     await save_metodoImpressao();
-    await save_tipoSensor();
-    await save_redeConectada();
+    // await save_tipoSensor();
+    // await save_redeConectada();
     await save_statusCabeca();
-    await save_statusPause();
+    // await save_statusPause();
 
     let honeywellInfo = {
         enderecoFila,

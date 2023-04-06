@@ -12,6 +12,15 @@
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
+  "build": {
+    "appId": "GerenciamentoDeImpressoras",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "./public/images/icon.ico"
+    }
+  },
   "author": {
     "name": "wellingtondfr",
     "email": "wellingtondfr@gmail.com"

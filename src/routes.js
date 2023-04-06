@@ -49,7 +49,7 @@ router.get('/termica', async (req, res) => {
 
 router.get('/termica/refresh', (req, res) => {
 
-    getPrinterTermicaInformation();
+    getPrinterLaserInformation();
     getPrinterTermicaInformation();
 
     setTimeout(() => {
@@ -152,7 +152,7 @@ router.get('/settings/add/csv', (req, res) => {
 
     setTimeout(() => {
         res.redirect("/settings");
-    }, 3000);
+    }, 5000);
 });
 
 router.post("/settings/:nomeFila", async (req, res) => {

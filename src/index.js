@@ -1,7 +1,5 @@
 const { app, BrowserWindow, Tray, Menu, dialog } = require('electron');
 const path = require('path');
-const inserirDadosCSV = require('./snmp/inserirDadosCSV');
-const getPrinterLaserInformation = require('./controllers/getPrinterLaserInformation');
 
 //express server
 const server = require('./app');

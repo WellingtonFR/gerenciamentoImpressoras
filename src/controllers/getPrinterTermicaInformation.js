@@ -1,6 +1,7 @@
 const axios = require("axios")
 const database = require("../database/db")
 const getZebraInfo = require("../snmp/zebra")
+const getHoneywellInfo = require("../snmp/honeywell")
 const PrinterTermicaStatusController = require("./printerTermicaStatusController")
 const printerController = require("./printerController")
 
@@ -12,7 +13,7 @@ const getPrinterTermicaInformation = (async () => {
 
             let url = "http://" + printerData.enderecoFila
             let urlZebra = "http://" + printerData.enderecoFila + "/setadv";
-            // let urlHoneywell = "http://" + printerData.enderecoFila + "/index.lua";
+            let urlHoneywell = "http://" + printerData.enderecoFila + "/index.lua";
 
 
             //Zebra
@@ -37,25 +38,29 @@ const getPrinterTermicaInformation = (async () => {
             }).catch(error => { })
 
             //Honeywell
-            // axios.get(urlSamsung).then(response => {
+            axios.get(urlHoneywell).then(response => {
 
-            //     if (response.status == 200) {
+                if (response.status == 200) {
 
-            //         getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsung => {
-            //             PrinterTermicaStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
-            //                 if (dadosRetorno == null) {
-            //                     PrinterTermicaStatusController.create(dadosSamsung);
-            //                 } else {
-            //                     PrinterTermicaStatusController.update(dadosSamsung);
-            //                 }
-            //             }).catch(error => {
-            //                 console.log("Erro ao buscar informacoes na base status impressoras: " + error);
-            //             })
+                    console.log("Link ok")
 
-            //         })
-            //     }
+                    getHoneywellInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosHoneywell => {
+                        PrinterTermicaStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                            if (dadosRetorno == null) {
+                                console.log("Dados honeywell ok create")
+                                PrinterTermicaStatusController.create(dadosHoneywell);
+                            } else {
+                                console.log("Dados honeywell ok update")
+                                PrinterTermicaStatusController.update(dadosHoneywell);
+                            }
+                        }).catch(error => {
+                            console.log("Erro ao buscar informacoes na base status impressoras: " + error);
+                        })
 
-            // }).catch(error => { })
+                    })
+                }
+
+            }).catch(error => { })
 
             //Erros: não conexão
             axios.get(url, { timeout: 7000 }).then(response => {
