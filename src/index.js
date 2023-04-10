@@ -3,7 +3,6 @@ const path = require('path');
 
 //express server
 const server = require('./app');
-const { render } = require('./app');
 
 //Electron build
 

@@ -3,23 +3,13 @@
   "productName": "Gerenciador de impressoras",
   "version": "1.0.1",
   "description": "Gerenciamento de impressoras e suprimentos",
-  "main": "src/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
-  },
-  "keywords": [],
-  "build": {
-    "appId": "GerenciamentoDeImpressoras",
-    "win": {
-      "target": [
-        "nsis"
-      ],
-      "icon": "./public/images/icon.ico"
-    }
   },
   "author": {
     "name": "wellingtondfr",
@@ -46,5 +36,6 @@
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
     "electron": "23.1.0"
-  }
+  },
+  "keywords": []
 }
