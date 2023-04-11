@@ -31,7 +31,13 @@ module.exports = async function getSamsung6555Info(ip, nome) {
                 if (error) {
                     reject();
                 } else {
-                    toner = data[0].value;
+                    if (data[0].value > 100) {
+                        toner = 100;
+                    } else if (data[0].value < 0) {
+                        toner = 0;
+                    } else {
+                        toner = data[0].value;
+                    }
                     resolve();
                 }
             })
@@ -45,6 +51,15 @@ module.exports = async function getSamsung6555Info(ip, nome) {
                     reject();
                 } else {
                     unidadeImagem = Math.round(data[0].value / 600);
+
+                    if (unidadeImagem > 100) {
+                        unidadeImagem = 100
+                    }
+
+                    if (unidadeImagem < 0) {
+                        unidadeImagem = 0
+                    }
+
                     resolve();
                 }
             })

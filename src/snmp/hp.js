@@ -30,7 +30,14 @@ module.exports = async function HPInfo(ip, nome) {
                 if (error) {
                     reject();
                 } else {
-                    toner = data[0].value;
+                    if (data[0].value > 100) {
+                        toner = 100;
+                    } else if (data[0].value < 0) {
+                        toner = 0;
+                    } else {
+                        toner = data[0].value;
+                    }
+
                     resolve();
                 }
             })
@@ -45,9 +52,14 @@ module.exports = async function HPInfo(ip, nome) {
                 } else {
                     if (data[0].value == "noSuchInstance") {
                         kitManutencao = "-";
+                    } else if (data[0].value > 100) {
+                        kitManutencao = 100;
+                    } else if (data[0].value < 0) {
+                        kitManutencao = 0;
                     } else {
                         kitManutencao = data[0].value;
                     }
+
                     resolve();
                 }
             })
