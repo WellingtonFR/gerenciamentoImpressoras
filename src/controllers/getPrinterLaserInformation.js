@@ -15,6 +15,8 @@ const getPrinterLaserInformation = (async () => {
             let url = "http://" + printerData.enderecoFila
             let urlHP = "https://" + printerData.enderecoFila + "/hp/device/DeviceStatus/Index";
             let urlSamsung = "http://" + printerData.enderecoFila + "/sws/app/information/home/home.json";
+            let urlSamsung6555 = url + "/Information/supplies_status.htm";
+            let urlSamsungM5360RX = url + "/sws.application/home/homeDeviceInfo.sws";
 
             //HPs
             axios.get(urlHP).then(response => {
@@ -39,6 +41,46 @@ const getPrinterLaserInformation = (async () => {
 
             //Maioria das Samsung
             axios.get(urlSamsung).then(response => {
+
+                if (response.status == 200) {
+
+                    getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsung => {
+                        PrinterLaserStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                            if (dadosRetorno == null) {
+                                PrinterLaserStatusController.create(dadosSamsung);
+                            } else {
+                                PrinterLaserStatusController.update(dadosSamsung);
+                            }
+                        }).catch(error => {
+                            console.log("Erro ao buscar informacoes na base status impressoras: " + error);
+                        })
+
+                    })
+                }
+
+            }).catch(error => { })
+
+            axios.get(urlSamsung6555).then(response => {
+
+                if (response.status == 200) {
+
+                    getSamsungInfo(printerData.enderecoFila, printerData.nomeFila).then(dadosSamsung => {
+                        PrinterLaserStatusController.findByName(printerData.nomeFila).then(dadosRetorno => {
+                            if (dadosRetorno == null) {
+                                PrinterLaserStatusController.create(dadosSamsung);
+                            } else {
+                                PrinterLaserStatusController.update(dadosSamsung);
+                            }
+                        }).catch(error => {
+                            console.log("Erro ao buscar informacoes na base status impressoras: " + error);
+                        })
+
+                    })
+                }
+
+            }).catch(error => { })
+
+            axios.get(urlSamsungM5360RX).then(response => {
 
                 if (response.status == 200) {
 
