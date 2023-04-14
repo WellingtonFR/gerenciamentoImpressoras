@@ -20,7 +20,11 @@ module.exports = async function getSamsung6555Info(ip, nome) {
     let contador = ""
     let rede = ""
 
-    var session = new snmp.Session({ host: ip, port: 161, community: 'public' });
+    try {
+        var session = new snmp.Session({ host: ip, port: 161, community: 'public', timeouts: [2000, 2000, 2000] });
+    } catch (error) {
+        console.log("Erro ao abrir sessao honeywell" + error);
+    }
 
     enderecoFila = ip;
     nomeFila = nome;
